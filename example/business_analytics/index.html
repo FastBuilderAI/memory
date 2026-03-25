@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastMemory Visualization - Before & After</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { font-family: -apple-system, sans-serif; margin: 0; padding: 20px; background: #0f172a; color: white; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        button { padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px; }
+        button:hover { background: #2563eb; }
+        button.active { background: #10b981; }
+        .node { stroke: #fff; stroke-width: 1.5px; cursor: pointer; }
+        .link { stroke: #334155; stroke-opacity: 0.6; }
+        svg { background: #1e293b; border-radius: 8px; width: 100%; height: 750px; }
+        .label { font-size: 12px; fill: white; pointer-events: none; }
+        .tooltip {
+            position: absolute; text-align: left; padding: 8px; font: 12px sans-serif;
+            background: #cbd5e1; color: #0f172a; border: 0px; border-radius: 4px; pointer-events: none; opacity: 0;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h2 id="view-title">Before: Unstructured Dense Vector Graph (Standard RAG)</h2>
+            <p id="view-desc">High density, flat connections based solely on cosine similarity of vectors without any mapped event-driven structure.</p>
+        </div>
+        <div>
+            <button id="btn-before" class="active" onclick="showBefore()">Before (Vector Graph)</button>
+            <button id="btn-after" onclick="showAfter()">After (FastMemory Louvain)</button>
+        </div>
+    </div>
+    
+    <div id="chart"></div>
+    <div id="tooltip" class="tooltip"></div>
+    <script src="output.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof fastMemoryData === 'undefined') {
+                document.getElementById('chart').innerHTML = "<p style='color:white; padding: 20px;'>Error: fastMemoryData not defined. Run ./run.sh to generate output.js</p>";
+                return;
+            }
+            // Initialize with 'Before' view if fastMemoryData is defined
+            showBefore();
+        });
+        
+        let sim = null;
+        const width = document.getElementById('chart').clientWidth || 1000;
+        const height = 750;
+
+        function showBefore() {
+            document.getElementById('btn-before').classList.add('active');
+            document.getElementById('btn-after').classList.remove('active');
+            document.getElementById('view-title').innerText = "Before: Unstructured Dense Vector Graph (Standard RAG)";
+            document.getElementById('view-desc').innerText = "High density, flat connections based solely on cosine similarity of vectors without any mapped event-driven structure.";
+            
+            // Create a chaotic dense graph simulating k-NN vector retrieval
+            const nodes = [];
+            const links = [];
+            const numNodes = 40;
+            for(let i=0; i<numNodes; i++) {
+                nodes.push({ id: "Chunk_" + i, name: "Vector Chunk " + i, size: 6, group: 0, desc: "Raw text embedding", isBlock: false, cbfdae: "Vector" });
+            }
+            for(let i=0; i<numNodes; i++) {
+                // Connect to 3-5 random nearest neighbors densely
+                const numNeighbors = Math.floor(Math.random() * 3) + 3;
+                for(let j=0; j<numNeighbors; j++) {
+                    let target = Math.floor(Math.random() * numNodes);
+                    if(target !== i) {
+                        links.push({ source: nodes[i].id, target: nodes[target].id, value: 0.1 });
+                    }
+                }
+            }
+            
+            renderGraph(nodes, links, -50, 200, true);
+        }
+
+        function showAfter() {
+            document.getElementById('btn-after').classList.add('active');
+            document.getElementById('btn-before').classList.remove('active');
+            document.getElementById('view-title').innerText = "After: Clustered Component Graph (FastMemory)";
+            document.getElementById('view-desc').innerText = "Structured, event-driven, hierarchical memory blocks clustered by rust-louvain into functional components.";
+            
+            const nodes = [];
+            const links = [];
+            const nodeMap = new Map();
+            
+            function flattenBlocks(blocks, parentBlock) {
+                blocks.forEach((block, i) => {
+                    const blockId = block.id;
+                    if (!nodeMap.has(blockId)) {
+                        nodes.push({ id: blockId, group: i+1, name: block.name, size: block.node_count * 10 + 10, isBlock: true, cbfdae: block.cbfdae_level || "Block", desc: "Block type: " + block.layer });
+                        nodeMap.set(blockId, true);
+                    }
+                    
+                    if (parentBlock) {
+                        links.push({ source: parentBlock, target: blockId, value: 5, linkType: "hierarchy" });
+                    }
+                    
+                    if (block.nodes && Array.isArray(block.nodes)) {
+                        block.nodes.forEach(n => {
+                            if(!nodeMap.has(n.id)) {
+                                // Color styling based on cbfdae level
+                                let n_color = "#3b82f6"; // Blue default
+                                if (n.cbfdae_level === "Data") n_color = "#eab308"; // Yellow
+                                if (n.cbfdae_level === "Access") n_color = "#22c55e"; // Green
+                                if (n.cbfdae_level === "Event") n_color = "#ef4444"; // Red
+                                if (n.cbfdae_level === "Function") n_color = "#8b5cf6"; // Purple
+
+                                nodes.push({ id: n.id, action: n.action, group: i+1, name: n.id, size: n.cbfdae_level === "Function" ? 8 : 6, isBlock: false, cbfdae: n.cbfdae_level || "Function", desc: "Action: " + (n.action||"none"), color: n_color });
+                                nodeMap.set(n.id, true);
+                            }
+                            // Strong explicit logical edge (Hierarchy C/B -> Node)
+                            links.push({ source: n.id, target: blockId, value: 1, linkType: "hierarchy" });
+                            
+                            if (n.cbfdae_level === "Function") {
+                                if (n.data_connections && Array.isArray(n.data_connections)) {
+                                    n.data_connections.forEach(target => {
+                                        links.push({ source: n.id, target: target, value: 0.2, linkType: "data" });
+                                    });
+                                }
+                                if (n.access && Array.isArray(n.access)) {
+                                    n.access.forEach(target => {
+                                        links.push({ source: n.id, target: target, value: 0.2, linkType: "access" });
+                                    });
+                                }
+                                if (n.events && Array.isArray(n.events)) {
+                                    n.events.forEach(target => {
+                                        links.push({ source: n.id, target: target, value: 0.2, linkType: "event" });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                    
+                    if (block.sub_blocks && Array.isArray(block.sub_blocks)) {
+                        flattenBlocks(block.sub_blocks, blockId);
+                    }
+                });
+            }
+            
+            flattenBlocks(fastMemoryData, null);
+
+            renderGraph(nodes, links, -100, 300, true);
+        }
+
+        function renderGraph(nodes, links, chargeStr, linkDist, showLabels) {
+            d3.select("#chart").selectAll("*").remove();
+            if(sim) sim.stop();
+
+            sim = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(linkDist))
+                .force("charge", d3.forceManyBody().strength(chargeStr))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collide", d3.forceCollide().radius(d => d.size + 10).iterations(2));
+
+            const svg = d3.select("#chart").append("svg")
+                .attr("viewBox", [0, 0, width, height]);
+
+            const link = svg.append("g")
+                .attr("class", "link")
+                .selectAll("line")
+                .data(links)
+                .join("line")
+                .attr("stroke-width", d => d.linkType === 'hierarchy' ? 1.5 : 0.8)
+                .attr("stroke", d => d.linkType === 'data' ? "#eab308" : d.linkType === 'access' ? "#22c55e" : d.linkType === 'event' ? "#ef4444" : "#334155")
+                .attr("stroke-dasharray", d => d.linkType === 'hierarchy' ? "none" : "2,2");
+
+            const linkLabel = svg.append("g")
+                .attr("class", "link-label")
+                .selectAll("text")
+                .data(links.filter(d => d.linkType !== 'hierarchy'))
+                .join("text")
+                .attr("font-size", "7px")
+                .attr("fill", d => d.linkType === 'data' ? "#eab308" : d.linkType === 'access' ? "#22c55e" : d.linkType === 'event' ? "#ef4444" : "#64748b")
+                .attr("dominant-baseline", "middle")
+                .attr("text-anchor", "middle")
+                .text(d => d.linkType || 'cosine_sim');
+
+            const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+            const node = svg.append("g")
+                .attr("class", "node")
+                .selectAll("circle")
+                .data(nodes)
+                .join("circle")
+                .attr("r", d => d.size)
+                .attr("fill", d => d.isBlock ? colorScale(d.group) : d.color || "#3b82f6")
+                .call(drag(sim));
+
+            const tooltip = d3.select("#tooltip");
+
+            node.on("mouseover", function(event, d) {
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.html("<strong>" + d.name + "</strong><br/>" + d.desc)
+                       .style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 28) + "px");
+            }).on("mouseout", function(d) {
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+
+            let label;
+            if (showLabels) {
+                label = svg.append("g")
+                    .attr("class", "label")
+                    .selectAll("text")
+                    .data(nodes)
+                    .join("text")
+                    .each(function(d) {
+                        d3.select(this).append("tspan")
+                            .attr("x", 0)
+                            .attr("y", -5)
+                            .attr("font-weight", d.isBlock ? "bold" : "normal")
+                            .attr("font-size", d.isBlock ? "12px" : "10px")
+                            .attr("fill", d.isBlock ? "#fff" : "#94a3b8")
+                            .text(d.isBlock ? d.name : d.id);
+
+                        d3.select(this).append("tspan")
+                            .attr("x", 0)
+                            .attr("dy", "14")
+                            .attr("font-size", "10px")
+                            .attr("fill", d.isBlock ? "#cbd5e1" : "#64748b")
+                            .text(d.isBlock ? d.cbfdae : d.action || "Node");
+                    });
+            }
+
+            sim.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                linkLabel
+                    .attr("x", d => (d.source.x + d.target.x) / 2)
+                    .attr("y", d => (d.source.y + d.target.y) / 2);
+
+                node
+                    .attr("cx", d => Math.max(d.size, Math.min(width - d.size, d.x)))
+                    .attr("cy", d => Math.max(d.size, Math.min(height - d.size, d.y)));
+                if (showLabels && label) {
+                    label.attr("transform", d => `translate(${d.x + 15}, ${d.y + 5})`);
+                }
+            });
+        }
+
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        }
+        
+    </script>
+</body>
+</html>

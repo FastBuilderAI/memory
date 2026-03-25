@@ -1,0 +1,102 @@
+# 100 High-Value Huggingface Datasets
+
+- **m-a-p/FineFineWeb** (2,746,970 downloads) - Tags: text-classification, text-generation
+- **KakologArchives/KakologArchives** (2,530,990 downloads) - Tags: text-classification
+- **NTU-NLP-sg/xCodeEval** (1,270,039 downloads) - Tags: translation, token-classification, text-retrieval, text-generation, text-classification, feature-extraction, question-answering
+- **Salesforce/wikitext** (1,021,438 downloads) - Tags: text-generation, fill-mask
+- **openai/gsm8k** (696,467 downloads) - Tags: text-generation
+- **epfml/FineWeb-HQ** (690,453 downloads) - Tags: text-generation
+- **nguha/legalbench** (627,283 downloads) - Tags: text-classification, question-answering, text-generation
+- **allenai/c4** (625,336 downloads) - Tags: text-generation, fill-mask
+- **allenai/dolma3_mix-6T-1025-7B** (571,055 downloads) - Tags: text-generation
+- **allenai/MADLAD-400** (541,484 downloads) - Tags: text-generation
+- **OpenSQZ/AutoMathText-V2** (491,116 downloads) - Tags: text-generation, question-answering
+- **HuggingFaceFW/finephrase** (477,047 downloads) - Tags: text-generation
+- **cais/mmlu** (395,216 downloads) - Tags: question-answering
+- **allenai/ai2_arc** (365,758 downloads) - Tags: question-answering
+- **nyu-mll/glue** (361,527 downloads) - Tags: text-classification
+- **HuggingFaceFW/fineweb-edu** (291,267 downloads) - Tags: text-generation
+- **Zyphra/Zyda-2** (283,626 downloads) - Tags: text-generation
+- **Helsinki-NLP/fineweb-edu-translated** (255,672 downloads) - Tags: translation, text-generation
+- **aps/super_glue** (217,785 downloads) - Tags: text-classification, token-classification, question-answering
+- **mlfoundations/MINT-1T-HTML** (204,827 downloads) - Tags: image-to-text, text-generation
+- **jat-project/jat-dataset** (197,307 downloads) - Tags: reinforcement-learning, text-generation, question-answering
+- **HuggingFaceFW/fineweb** (196,856 downloads) - Tags: text-generation
+- **liwu/MNBVC** (196,215 downloads) - Tags: text-generation, fill-mask
+- **AmazonScience/document-haystack** (181,509 downloads) - Tags: question-answering, visual-question-answering, document-question-answering
+- **stanfordnlp/imdb** (168,607 downloads) - Tags: text-classification
+- **jobs-git/Zyda-2** (146,780 downloads) - Tags: text-generation
+- **jobs-git/HPLT2.0_cleaned** (131,750 downloads) - Tags: fill-mask, text-generation
+- **TIGER-Lab/MMLU-Pro** (129,293 downloads) - Tags: question-answering
+- **HuggingFaceH4/MATH-500** (122,848 downloads) - Tags: text-generation
+- **rajpurkar/squad** (120,130 downloads) - Tags: question-answering
+- **ibrahimhamamci/CT-RATE** (115,884 downloads) - Tags: image-to-text, text-to-image, image-classification, question-answering, visual-question-answering, zero-shot-classification
+- **Idavidrein/gpqa** (108,114 downloads) - Tags: question-answering, text-generation
+- **allenai/dolma3_mix-6T** (106,059 downloads) - Tags: text-generation
+- **allenai/openbookqa** (104,052 downloads) - Tags: question-answering
+- **wikimedia/wikipedia** (97,414 downloads) - Tags: text-generation, fill-mask
+- **roneneldan/TinyStories** (93,460 downloads) - Tags: text-generation
+- **allenai/dolma3_pool** (93,308 downloads) - Tags: text-generation
+- **DATA-MASK/FineWeb-Mask** (93,193 downloads) - Tags: text-generation
+- **MMMU/MMMU** (88,532 downloads) - Tags: question-answering, visual-question-answering, multiple-choice
+- **huggingface/documentation-images** (2,032,605 downloads)
+- **hf-doc-build/doc-build** (1,790,768 downloads)
+- **ropedia-ai/xperience-10m** (1,661,612 downloads)
+- **banned-historical-archives/banned-historical-archives** (1,515,570 downloads)
+- **tasl-lab/uniocc** (849,244 downloads)
+- **princeton-nlp/SWE-bench_Verified** (703,560 downloads)
+- **ScaleAI/SWE-bench_Pro** (645,695 downloads)
+- **Kthera/pesoz** (576,963 downloads)
+- **lavita/medical-qa-shared-task-v1-toy** (555,887 downloads)
+- **mteb/sts22-crosslingual-sts** (528,761 downloads)
+- **AquaV/genshin-voices-separated** (497,241 downloads)
+- **builddotai/Egocentric-100K** (490,152 downloads)
+- **Salesforce/GiftEvalPretrain** (483,968 downloads)
+- **hf-doc-build/doc-build-dev** (471,166 downloads)
+- **Maynor996/upload2** (434,311 downloads)
+- **xlangai/ubuntu_osworld_file_cache** (416,735 downloads)
+- **bigcode/commitpackft** (389,795 downloads)
+- **mteb/results** (383,482 downloads)
+- **rtrm/debug** (380,431 downloads)
+- **ryanmarten/OpenThoughts-1k-sample** (373,066 downloads)
+- **cadene/droid_1.0.1** (372,498 downloads)
+- **EpicPinkPenguin/procgen** (352,350 downloads)
+- **Maynor996/img_upload** (348,851 downloads)
+- **GEAR-Dreams/DreamZero-DROID-Data** (342,531 downloads)
+- **hallucinations-leaderboard/results** (325,647 downloads)
+- **anfera236/HHDC** (320,776 downloads)
+- **world-igr-plum/regions** (316,331 downloads)
+- **agents-course/course-images** (307,756 downloads)
+- **Jsinowitz/snodas-snowmelt-cache** (293,182 downloads)
+- **Kondapally/AIWD6** (292,625 downloads)
+- **dsinghvi/eval_awareness** (289,969 downloads)
+- **open-llm-leaderboard-old/requests** (287,001 downloads)
+- **nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim** (284,134 downloads)
+- **huggingface-course/documentation-images** (281,675 downloads)
+- **IPEC-COMMUNITY/droid_lerobot** (268,241 downloads)
+- **bigscience/P3** (265,560 downloads)
+- **Rowan/hellaswag** (261,923 downloads)
+- **mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M** (260,668 downloads)
+- **google-research-datasets/mbpp** (259,372 downloads)
+- **siril-spcc/gaia** (246,275 downloads)
+- **allenai/objaverse** (237,074 downloads)
+- **Lichess/standard-chess-games** (234,762 downloads)
+- **Chelsea707/arxiv_ocr** (232,607 downloads)
+- **k-l-lambda/cc-omr** (232,167 downloads)
+- **openai/openai_humaneval** (227,370 downloads)
+- **Naveen0501/dlgenai-nppe-dataset** (225,883 downloads)
+- **ducanhh55/movie-v2** (221,511 downloads)
+- **arcadiaaaaa/magvits_data** (218,640 downloads)
+- **nvidia/PhysicalAI-Autonomous-Vehicles** (217,259 downloads)
+- **Meehai/dronescapes2** (209,625 downloads)
+- **allenai/winogrande** (208,165 downloads)
+- **huggingface/badges** (201,867 downloads)
+- **Cnam-LMSSC/vibravox** (200,666 downloads)
+- **Stable-X/ProObjaverse-300K** (195,050 downloads)
+- **rhmnhsim/LolData** (193,852 downloads)
+- **charge-benchmark/Charge-060_0130** (190,021 downloads)
+- **ducanhh55/movie-v1** (184,576 downloads)
+- **PleIAs/common_corpus** (181,104 downloads)
+- **hf-internal-testing/hf_hub_cache** (179,772 downloads)
+- **transferable-samplers/many-peptides-md** (179,251 downloads)
+- **deepmind/code_contests** (176,992 downloads)
