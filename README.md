@@ -45,6 +45,9 @@ You simply have node-to-node semantic edges. You possess the "roads" (cosine sim
 
 Standard vector RAG databases index chunks individually, often losing the multi-hop reasoning capability required to trace dependencies. FastMemory restructures these into event-driven, hierarchical memory blocks.
 
+> [!IMPORTANT]
+> **Qualitative Analysis**: For a side-by-side comparison of AI response accuracy (Before vs. After), please see our **[AI Response Comparison Guide](ResponseComparison.md)**.
+
 _(You can open the interactive D3.js visualizations directly in your browser from the `example/` directories!)_
 
 ### 🏥 Health Science
