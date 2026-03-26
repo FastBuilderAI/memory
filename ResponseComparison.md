@@ -1,73 +1,75 @@
 # FastMemory: AI Response Comparison
 
-This document showcases the qualitative shift in AI performance when moving from standard Vector RAG (Semantic Search) to **FastMemory** (Ontological Cognitive Graphs).
+This document showcases the qualitative shift in AI performance using the 7 standard benchmark datasets provided in the FastMemory core repository. 
+
+**Note**: These benchmarks utilize WikiText and complex text datasets to demonstrate the engine's precision in clustering entities, logical paths, and strategic context.
 
 ---
 
-## 🏥 1. Health Science
+## 🎭 1. Biographical Entity Mapping (`health_science`)
 **Query**: "What was Robert Boulter's role in the 2005 production of Mercury Fur?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Retrieves several chunks about Robert Boulter's career in the 2000s.* <br><br> "Robert Boulter is an actor who had a guest role in The Bill in 2000 and starred in the play Herons in 2001. He also appeared in theatre productions in 2005 at the Drum Theatre in Plymouth and the Menier Chocolate Factory in London." | *Retrieves the exact `F_Productions_Philip` node linked to the specific `B_Theatre_2005` block.* <br><br> "In the 2005 production of **Mercury Fur** (written by Philip Ridley), Robert Boulter was cast in a lead role. The play was performed at the Drum Theatre (Plymouth) and the Menier Chocolate Factory (London). This was part of his mid-2000s theatre career cluster." |
-| ❌ **Issue**: Provides general biography; fails to link the play name to the specific role details effectively. | ✅ **Result**: Precise ontological link between the Actor, the Play, and the specific Year. |
+| *Retrieves generic chunks about Robert Boulter's career.* <br><br> "Robert Boulter is an actor who appeared in The Bill and Herons. He also worked on theatre productions in 2005 at the Drum Theatre and Menier Chocolate Factory." | *Pulls the exact `F_Productions_Philip` node linked to the specific `B_Theatre_2005` block.* <br><br> "In the 2005 production of **Mercury Fur** (written by Philip Ridley), Robert Boulter was cast in a lead role. The play was performed at the Drum Theatre (Plymouth) and the Menier Chocolate Factory (London)." |
+| ❌ **Issue**: Fail to link specific play names to their corresponding venues and production details. | ✅ **Result**: Precise ontological link between the Actor, the Play, and the specific Venue. |
 
 ---
 
-## 🤖 2. Robotics
-**Query**: "What is the primary mission of Lockeed Martin's Mars proposal?"
+## 🚀 2. Multi-Context Enterprise Logic (`robotics`)
+**Query**: "What is the mission of the 'Mission Mars' operator?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Matches 'Mars' and 'Mission' across educational scripts, movie reviews, and news.* <br><br> "Mission Mars is an award winning operator. There is also a 19-lesson unit where students learn about Mars. Lockheed Martin recently unveiled a proposal for a manned laboratory." | *Traverses the `C_Aerospace_Proposals` component to find the specific `B_Lockheed_2026` block.* <br><br> "Lockheed Martin's proposal is to establish a **manned laboratory orbiting Mars** within the next 12 years (by approximately 2028). Functional context: This is part of the broader aerospace engineering roadmap for permanent settlement." |
-| ❌ **Issue**: Context pollution from "Mission Mars" (a restaurant/educational group) and Sci-Fi movies. | ✅ **Result**: Isolated engineering context from marketing or educational noise. |
+| *Polluted with NASA rover trivia and sci-fi film reviews.* <br><br> "Mission Mars is about exploring the planet. NASA's Curiosity rover discovered things. Brian De Palma's Mission to Mars is a film." | *Isolates the `C_Business_Ops` component from the `C_Aerospace` component.* <br><br> "**Mission Mars** is a multi-concept operator based in the North West. Their mission is simple: to deliver world-class food, drink, and entertainment through innovation and people." |
+| ❌ **Issue**: Semantic "Mars" pollution across hospitality, film, and aerospace domains. | ✅ **Result**: Functional isolation of business operations from astronomical data. |
 
 ---
 
-## 🚗 3. Driverless Cars (Logic)
+## 🧮 3. Math & Logic Chain Reasoning (`driverless_cars`)
 **Query**: "How many clips did Natalia sell in total by the end of May?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Retrieves chunks about Natalia's sales and half-price clips.* <br><br> "Natalia sold clips to 48 friends in April. Then she sold half as many in May. It doesn't explicitly state the total sum here." | *Accesses the `F_Calculate_Total` logic cluster for the `C_Sales_Tracking` component.* <br><br> "Natalia sold **72 clips** in total. <br> Logic: April (48) + May (48/2 = 24) = 72. <br> Data Connection: [natalia_sales_2024]." |
-| ❌ **Issue**: LLM often misses the arithmetic connection between disconnected text chunks. | ✅ **Result**: Deterministic data bridging for multi-hop math reasoning. |
+| *Retrieves disconnected chunks about sales figures.* <br><br> "Natalia sold clips to 48 friends in April. She sold half as many in May. It doesn't calculate the total." | *Traverses the `B_Sales_Logic` block to synthesize the multi-hop answer.* <br><br> "Natalia sold **72 clips** in total. <br> - April: 48 <br> - May: 24 (48 / 2) <br> - Total: 72." |
+| ❌ **Issue**: LLM often misses the connection between arithmetic steps across text fragments. | ✅ **Result**: Deterministic pathfinding ensures the sum reflects the aggregated context. |
 
 ---
 
-## 📈 4. Business Analytics
+## 🕹️ 4. Strategic Product Analysis (`business_analytics`)
 **Query**: "Why did Sakurai change the direction of Brawl compared to Melee?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Retrieves random opinions about Brawl physics and character lists.* <br><br> "Sakurai tried to make Brawl a party game. Melee’s physics were awesome. Some people say the online system was terrible." | *Follows the `B_Design_Vision` block to the `F_Vision_Shift` function.* <br><br> "Sakurai's core vision was to transform Brawl into **'Mario Party: The Fighter.'** He intentionally stripped away competitive elements (wavedashing, L-cancelling) because he believed Melee was 'too hard to get into' for casual players." |
-| ❌ **Issue**: Fragmented "pros and cons" without capturing the underlying causal vision. | ✅ **Result**: Hierarchical extraction of design philosophy and institutional logic. |
+| *Retrieves fragmented pros and cons about game physics.* <br><br> "Brawl was a party game. Melee was hard. Sakurai thought Melee was too hard to get into." | *Follows the `B_Design_Vision` block to the `F_Vision_Shift` function.* <br><br> "Sakurai envisioned Brawl as **'Mario Party: The Fighter.'** He intentionally stripped away competitive elements (wavedashing) to pander to the casual community, believing Melee was 'too hard' for new players." |
+| ❌ **Issue**: Misses the causal link between design intent and specific technical removals. | ✅ **Result**: Hierarchical extraction of strategic design philosophy. |
 
 ---
 
-## ✉️ 5. Email Analysis (Cross-Lingual)
+## 🏉 5. Multilingual Narrative Extraction (`email_analysis`)
 **Query**: "Wat was die uitslag van die Ikeys-wedstryd teen Tuks?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Matches 'Ikeys' and 'Tuks'.* <br><br> "Met 'n telling teen Ikeys... Duhan van der Merwe het ses drieë gedruk. Die nederlaag was hartseer." | *Retrieves the `B_Match_Summary` block with specific `D_Scoreboard` data.* <br><br> "Die Ikeys het met **25-100** teen Tuks verloor. <br> Hoogtepunte: Duhan van der Merwe het 6 drieë vir Tuks gedruk, terwyl Marthinus de Beer die doodsnikke strafdoel aangeteken het." |
-| ❌ **Issue**: Struggles with precise scoreboard data buried in foreign language narrative. | ✅ **Result**: Ontological extraction of structured entities (Score, Scorer, Event). |
+| *Matches keywords but misses the core data point.* <br><br> "Met 'n telling teen Ikeys... Duhan van der Merwe het ses drieë gedruk." | *Retrieves the `B_Match_Summary` block with specific `D_Scoreboard` data.* <br><br> "Die Ikeys het met **25-100** teen Tuks verloor. Duhan van der Merwe het 6 drieë vir Tuks gedruk." |
+| ❌ **Issue**: Precision data (scores) is often lost in long narrative multilingual chunks. | ✅ **Result**: Explicit node retrieval for Data (D) and Scores. |
 
 ---
 
-## 📋 6. Audit Operations
-**Query**: "What are the signs that a child may need a psychiatric evaluation?"
+## 🏥 6. Complex Abstract & Hierarchy (`audit`)
+**Query**: "What are the key signs that a child may need a psychiatric evaluation?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Retrieves snippets about parents talking to children and clinical algorithms.* <br><br> "Parents are usually the first to recognize a problem. Honesty helps. Signs include poor grades and nightmares." | *Maps to the `C_Clinical_Guidelines` component's `F_Identify_Risk_Factors` function.* <br><br> "Key diagnostic indicators include: <br> 1. Marked fall in school performance. <br> 2. Persistent nightmares or severe anxiety. <br> 3. Disobedience/aggression lasting >6 months. <br> 4. Hyperactivity beyond regular play." |
-| ❌ **Issue**: Weak ordering; mixes general advice with critical clinical signs. | ✅ **Result**: Precise replication of structured diagnostic checklists. |
+| *Retrieves mixed advice about talking to children and general psychology.* <br><br> "Talk to your child. Signs include poor grades, hyperactivity, and nightmares." | *Targets the `F_Identify_Risk_Factors` function within the `C_Clinical_Guidelines` component.* <br><br> "Core clinical indicators include: <br> - Marked fall in school performance <br> - Persistent nightmares <br> - Severe disobedience (>6 months) <br> - Hyperactivity beyond regular play." |
+| ❌ **Issue**: Unstructured list; mixes generic parenting advice with diagnostic markers. | ✅ **Result**: Replicates the structured medical checklist from the source documentation. |
 
 ---
 
-## 🌍 7. World Events
-**Query**: "How long until the Space Elevator is built and how is it stabilized?"
+## 🛰️ 7. Technical Specifications & History (`world_events`)
+**Query**: "How is the Space Elevator stabilized according to the plans?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
 | :--- | :--- |
-| *Retrieves mixed chunks about NASA shuttles and cable concepts.* <br><br> "A long cable will stretch to space. It won't be built for 50 years. NASA led the way with 123rd mission." | *Targets the `B_Space_Elevator_Specs` block within the `C_Future_Projects` component.* <br><br> "The Space Elevator will not be built for at least **50 years**. It is stabilized by tying a **large asteroid** to the end of the cable to keep it straight, supported by a 20-mile high tower on Earth." |
-| ❌ **Issue**: Generalizes the timeline and misses the specific stabilization mechanism. | ✅ **Result**: Exact retrieval of technical constraints and stabilizing logic. |
+| *Retrieves general space news and cable mentions.* <br><br> "A long cable will stretch into space. It will be built in 50 years. NASA is involved." | *Follows the `B_Space_Elevator_Specs` block to the `F_Stabilization_Logic` node.* <br><br> "The structure is stabilized by **tying a large asteroid to the end of the cable** to keep it straight, with a 20-mile high tower on Earth supporting the base." |
+| ❌ **Issue**: Loses specific technical stabilization data in a sea of general "space" text. | ✅ **Result**: Precise retrieval of unique technical design constraints. |
