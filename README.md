@@ -50,47 +50,47 @@ Standard vector RAG databases index chunks individually, often losing the multi-
 
 _(You can open the interactive D3.js visualizations directly in your browser from the `example/` directories!)_
 
-### 🏥 Health Science
+### 🎭 Biographical Entities
 
 |                Before: Flat Semantic Vectors                 |          After: Clustered Functional Memory Graph           |
 | :----------------------------------------------------------: | :---------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/health_science/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/health_science/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/biographical_entities/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/biographical_entities/after.png" width="100%" /> |
 
-### 🤖 Robotics
+### 🎓 Multimodal Education
 
 |             Before: Flat Semantic Vectors              |       After: Clustered Functional Memory Graph        |
 | :----------------------------------------------------: | :---------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/robotics/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/robotics/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multimodal_education/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multimodal_education/after.png" width="100%" /> |
 
-### 🚗 Driverless Cars
+### 🧮 Logical Reasoning
 
 |                 Before: Flat Semantic Vectors                 |           After: Clustered Functional Memory Graph           |
 | :-----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/driverless_cars/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/driverless_cars/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/logical_reasoning/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/logical_reasoning/after.png" width="100%" /> |
 
-### 📈 Business Analytics
+### 🕹️ Strategic Product Design
 
 |                  Before: Flat Semantic Vectors                   |            After: Clustered Functional Memory Graph             |
 | :--------------------------------------------------------------: | :-------------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/business_analytics/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/business_analytics/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/strategic_product_design/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/strategic_product_design/after.png" width="100%" /> |
 
-### ✉️ Email Analysis
+### 🏉 Multilingual Narrative
 
 |                Before: Flat Semantic Vectors                 |          After: Clustered Functional Memory Graph           |
 | :----------------------------------------------------------: | :---------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/email_analysis/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/email_analysis/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multilingual_narrative/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multilingual_narrative/after.png" width="100%" /> |
 
-### 📋 Audit Operations
+### 📋 Abstract Integration
 
 |            Before: Flat Semantic Vectors            |      After: Clustered Functional Memory Graph      |
 | :-------------------------------------------------: | :------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/audit/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/audit/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/abstract_integration/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/abstract_integration/after.png" width="100%" /> |
 
-### 🌍 World Events
+### 🛰️ Technical Specifications
 
 |               Before: Flat Semantic Vectors                |         After: Clustered Functional Memory Graph          |
 | :--------------------------------------------------------: | :-------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/world_events/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/world_events/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/technical_specifications/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/technical_specifications/after.png" width="100%" /> |
 
 ---
 

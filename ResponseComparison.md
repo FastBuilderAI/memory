@@ -6,7 +6,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🎭 1. Biographical Entity Mapping (`health_science`)
+### 🎭 1. Biographical Entity Mapping (`biographical_entities`)
 **Query**: "What was Robert Boulter's role in the 2005 production of Mercury Fur?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
@@ -16,7 +16,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🚀 2. Multi-Context Enterprise Logic (`robotics`)
+## 🚀 2. Multi-Context Enterprise Logic (`multimodal_education`)
 **Query**: "What is the mission of the 'Mission Mars' operator?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
@@ -26,7 +26,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🧮 3. Math & Logic Chain Reasoning (`driverless_cars`)
+## 🧮 3. Math & Logic Chain Reasoning (`logical_reasoning`)
 **Query**: "How many clips did Natalia sell in total by the end of May?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
@@ -36,7 +36,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🕹️ 4. Strategic Product Analysis (`business_analytics`)
+## 🕹️ 4. Strategic Product Analysis (`strategic_product_design`)
 **Query**: "Why did Sakurai change the direction of Brawl compared to Melee?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
@@ -46,7 +46,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🏉 5. Multilingual Narrative Extraction (`email_analysis`)
+## 🏉 5. Multilingual Narrative Analysis (`multilingual_narrative`)
 **Query**: "Wat was die uitslag van die Ikeys-wedstryd teen Tuks?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
@@ -56,7 +56,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🏥 6. Complex Abstract & Hierarchy (`audit`)
+## 🏥 6. Complex Abstract & Hierarchy (`abstract_integration`)
 **Query**: "What are the key signs that a child may need a psychiatric evaluation?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
@@ -66,7 +66,7 @@ This document showcases the qualitative shift in AI performance using the 7 stan
 
 ---
 
-## 🛰️ 7. Technical Specifications & History (`world_events`)
+## 🛰️ 7. Technical Specifications & History (`technical_specifications`)
 **Query**: "How is the Space Elevator stabilized according to the plans?"
 
 | **Standard Vector RAG (Before)** | **FastMemory CBFDAE (After)** |
