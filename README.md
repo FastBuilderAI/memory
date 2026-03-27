@@ -13,24 +13,6 @@ Building reliable AI agents on top of massive Enterprise codebases and datasets 
 3. **Graph DB Sync Overhead**: Piping hierarchical data into Neo4J normally requires complex, fragile NLP and ETL pipelines. The FastMemory Rust engine does this natively in milliseconds using structural Louvain clustering.
 
 ---
- 
-## 🏆 Performance Supremacy Benchmarks
-
-FastMemory has been rigorously benchmarked against standard vector-based RAG implementations across multiple dimensions of enterprise AI reasoning.
-
-| Benchmark Category | FastMemory Achievement | Advantage over Standard RAG |
-| :--- | :--- | :--- |
-| **Multi-Doc Synthesis** | **FRAMES** Dataset Supremacy | Standard RAG is "lost in the middle" and fails at 5+ document hops; FastMemory maintains structural integrity. |
-| **Table Reasoning** | **T²-RAGBench** Lead | Naive chunking breaks table logic; FastMemory's CBFDAE ontology preserves relational boundaries. |
-| **Negative Rejection** | **RGB** Robustness | Near-zero hallucinations during "no answer" scenarios; standard RAG often "guesses" based on proximity. |
-| **Visual Logic** | **FinRAGBench-V** | Superior handling of visual and chart data via functional context blocks. |
-
-### 🚀 Latency & Scalability
-Verified via **[Hugging Face Supremacy Benchmarks](https://huggingface.co/datasets/fastbuilderai/fastmemory-supremacy-benchmarks)**:
-- **Sub-Second Indexing**: FastMemory exhibits near-zero time complexity for indexing dense Markdown (~0.35s - 0.38s).
-- **Linear Efficiency**: Unlike standard API RAG which scales linearly with network/embedding payloads, FastMemory's concurrent Rust core processes data locally at the edge.
-
----
 
 ## 🗺️ The Google Maps Analogy
 
@@ -63,52 +45,49 @@ You simply have node-to-node semantic edges. You possess the "roads" (cosine sim
 
 Standard vector RAG databases index chunks individually, often losing the multi-hop reasoning capability required to trace dependencies. FastMemory restructures these into event-driven, hierarchical memory blocks.
 
-> [!IMPORTANT]
-> **Qualitative Analysis**: For a side-by-side comparison of AI response accuracy (Before vs. After), please see our **[AI Response Comparison Guide](ResponseComparison.md)**.
-
 _(You can open the interactive D3.js visualizations directly in your browser from the `example/` directories!)_
 
-### 🎭 Biographical Entities
+### 🏥 Health Science
 
 |                Before: Flat Semantic Vectors                 |          After: Clustered Functional Memory Graph           |
 | :----------------------------------------------------------: | :---------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/biographical_entities/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/biographical_entities/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/health_science/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/health_science/after.png" width="100%" /> |
 
-### 🎓 Multimodal Education
+### 🤖 Robotics
 
 |             Before: Flat Semantic Vectors              |       After: Clustered Functional Memory Graph        |
 | :----------------------------------------------------: | :---------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multimodal_education/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multimodal_education/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/robotics/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/robotics/after.png" width="100%" /> |
 
-### 🧮 Logical Reasoning
+### 🚗 Driverless Cars
 
 |                 Before: Flat Semantic Vectors                 |           After: Clustered Functional Memory Graph           |
 | :-----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/logical_reasoning/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/logical_reasoning/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/driverless_cars/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/driverless_cars/after.png" width="100%" /> |
 
-### 🕹️ Strategic Product Design
+### 📈 Business Analytics
 
 |                  Before: Flat Semantic Vectors                   |            After: Clustered Functional Memory Graph             |
 | :--------------------------------------------------------------: | :-------------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/strategic_product_design/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/strategic_product_design/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/business_analytics/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/business_analytics/after.png" width="100%" /> |
 
-### 🏉 Multilingual Narrative
+### ✉️ Email Analysis
 
 |                Before: Flat Semantic Vectors                 |          After: Clustered Functional Memory Graph           |
 | :----------------------------------------------------------: | :---------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multilingual_narrative/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/multilingual_narrative/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/email_analysis/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/email_analysis/after.png" width="100%" /> |
 
-### 📋 Abstract Integration
+### 📋 Audit Operations
 
 |            Before: Flat Semantic Vectors            |      After: Clustered Functional Memory Graph      |
 | :-------------------------------------------------: | :------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/abstract_integration/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/abstract_integration/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/audit/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/audit/after.png" width="100%" /> |
 
-### 🛰️ Technical Specifications
+### 🌍 World Events
 
 |               Before: Flat Semantic Vectors                |         After: Clustered Functional Memory Graph          |
 | :--------------------------------------------------------: | :-------------------------------------------------------: |
-| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/technical_specifications/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/technical_specifications/after.png" width="100%" /> |
+| <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/world_events/before.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/world_events/after.png" width="100%" /> |
 
 ---
 
@@ -210,7 +189,7 @@ Data access within FastMemory is rigorously secured at the graph layer. Utilizin
 | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/robot_rag_memory.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/robot_fast_memory.png" width="100%" /> |
 
 - **Agentic Apps & SaaS**: Integrate `fastmemory mcp` directly into your proprietary AI loops. Instead of sending agents to vector DBs, send them into a FastMemory graph where they can extract isolated, functional context blocks to execute SaaS workflows.
-- **Fast Software Engineering**: Superfast is the official agentic framework for FastMemory. By indexing your entire application architecture into an ontological graph, **[Superfast](https://github.com/FastBuilderAI/superfast)** enables coding agents to query precisely how a proposed change will impact distant, decoupled components with near-zero hallucinations.
+- **Fast Software Engineering**: In [FastBuilder.AI](https://fastbuilder.ai), FastMemory acts as the structural brain for rapid feature development. By indexing the entire application architecture into an ontological graph, coding agents can query precisely how a proposed change will impact distant, decoupled components.
 - **The Possibilities are Endless**: Medical diagnostics routing, autonomous drone navigation logic, enterprise compliance auditing, etc.
 
 ---

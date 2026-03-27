@@ -4,9 +4,6 @@ When transitioning from local file-based memory to large-scale enterprise deploy
 
 This guide demonstrates how to deploy FastMemory at scale using **Neo4J**.
 
-> [!TIP]
-> **Production Templates**: For 13 ready-to-use Python examples across AWS, Azure, and GCP, check out our [Production Memory Templates](https://github.com/FastBuilderAI/memory-template).
-
 ---
 
 ## 🏗️ 1. Why Neo4J for FastMemory?

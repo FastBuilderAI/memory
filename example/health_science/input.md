@@ -1,4 +1,4 @@
-# Biographical_Entities Knowledge Base
+# Health_Science Knowledge Base
 
 ## [ID: ATF_S_0]
 **Action:** Process_Robert_Boulter
