@@ -5,6 +5,7 @@ use pyo3::types::PyDict;
 
 pub mod parser;
 pub mod cluster;
+pub mod telemetry;
 
 #[cfg(feature = "python")]
 #[pyfunction]
