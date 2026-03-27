@@ -13,6 +13,24 @@ Building reliable AI agents on top of massive Enterprise codebases and datasets 
 3. **Graph DB Sync Overhead**: Piping hierarchical data into Neo4J normally requires complex, fragile NLP and ETL pipelines. The FastMemory Rust engine does this natively in milliseconds using structural Louvain clustering.
 
 ---
+ 
++## 🏆 Performance Supremacy Benchmarks
++
++FastMemory has been rigorously benchmarked against standard vector-based RAG implementations across multiple dimensions of enterprise AI reasoning.
++
++| Benchmark Category | FastMemory Achievement | Advantage over Standard RAG |
++| :--- | :--- | :--- |
++| **Multi-Doc Synthesis** | **FRAMES** Dataset Supremacy | Standard RAG is "lost in the middle" and fails at 5+ document hops; FastMemory maintains structural integrity. |
++| **Table Reasoning** | **T²-RAGBench** Lead | Naive chunking breaks table logic; FastMemory's CBFDAE ontology preserves relational boundaries. |
++| **Negative Rejection** | **RGB** Robustness | Near-zero hallucinations during "no answer" scenarios; standard RAG often "guesses" based on proximity. |
++| **Visual Logic** | **FinRAGBench-V** | Superior handling of visual and chart data via functional context blocks. |
++
++### 🚀 Latency & Scalability
++Verified via **[Hugging Face Supremacy Benchmarks](https://huggingface.co/datasets/fastbuilderai/fastmemory-supremacy-benchmarks)**:
++- **Sub-Second Indexing**: FastMemory exhibits near-zero time complexity for indexing dense Markdown (~0.35s - 0.38s).
++- **Linear Efficiency**: Unlike standard API RAG which scales linearly with network/embedding payloads, FastMemory's concurrent Rust core processes data locally at the edge.
++
++---
 
 ## 🗺️ The Google Maps Analogy
 
