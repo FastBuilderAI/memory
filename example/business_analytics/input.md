@@ -1,4 +1,4 @@
-# Strategic_Product_Design Knowledge Base
+# Business_Analytics Knowledge Base
 
 ## [ID: ATF_S_0]
 **Action:** Process_Play_Sakurai
