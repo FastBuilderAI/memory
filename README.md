@@ -1,8 +1,16 @@
 # FastMemory
 
+[![🏆 SOTA on 13 Benchmarks](https://img.shields.io/badge/HuggingFace-SOTA%20on%2013%20Benchmarks-blue?logo=huggingface)](https://huggingface.co/fastbuilderai/FastMemory)
+
 **FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **CBFDAE** (Component, Block, Function, Data, Access, Event) taxonomy.
 
 Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the gap between shallow vector retrieval (RAG) and deterministic computational memory.
+
+## 🏆 State-of-the-Art (SOTA) Performance
+
+FastMemory has officially achieved **SOTA status on 13 distinct benchmarks** (including FinanceBench, FRAMES, LongBench, GraphRAG-Bench, and HaluEval), comprehensively outperforming standard vector RAG architectures in massive multi-hop reasoning, logic extraction, and deterministic pathfinding. 
+
+Explore the full benchmark matrix and transparent execution traces on our official [Hugging Face Model Card](https://huggingface.co/fastbuilderai/FastMemory).
 
 ## 🤬 Developer Pain Points & The FastMemory Solution
 
