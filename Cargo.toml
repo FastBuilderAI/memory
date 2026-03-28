@@ -28,6 +28,6 @@ pyo3 = { version = "0.28.2", optional = true }
 clap = { version = "4.5.4", features = ["derive"] }
 tokio = { version = "1.37.0", features = ["full", "rt-multi-thread"] }
 axum = "0.7.5"
-reqwest = { version = "0.13.2", features = ["json", "rustls"] }
+reqwest = { version = "0.13.2", features = ["json", "rustls", "blocking"] }
 sysinfo = "0.38.4"
 dotenv = "0.15.0"

@@ -10,6 +10,7 @@ pub mod telemetry;
 #[cfg(feature = "python")]
 #[pyfunction]
 fn process_markdown(text: String) -> PyResult<String> {
+    telemetry::LicenseTelemetry::ping();
     let atfs = parser::parse_markdown(&text);
     
     let mut edges = Vec::new();
