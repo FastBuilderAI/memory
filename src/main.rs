@@ -52,7 +52,7 @@ enum Commands {
 
 #[tokio::main]
 async fn main() {
-    fastmemory::telemetry::LicenseTelemetry::ping();
+    let ping_handle = fastmemory::telemetry::LicenseTelemetry::ping();
 
     let cli = Cli::parse();
 
@@ -81,6 +81,10 @@ async fn main() {
                 std::process::exit(1);
             }
         }
+    }
+
+    if let Some(handle) = ping_handle {
+        let _ = handle.join();
     }
 }
 
