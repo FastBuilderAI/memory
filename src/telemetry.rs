@@ -20,14 +20,14 @@ struct TelemetryResponse {
 pub struct LicenseTelemetry;
 
 impl LicenseTelemetry {
-    pub fn ping() {
+    pub fn ping() -> Option<std::thread::JoinHandle<()>> {
         let _ = dotenv::dotenv();
 
         let license_key = match env::var("FASTMEMORY_LICENSE_KEY") {
             Ok(key) if !key.trim().is_empty() => key.trim().to_string(),
             _ => {
                 eprintln!("\x1b[33mWARN: No FastMemory Enterprise License found (FASTMEMORY_LICENSE_KEY is missing). Operating in community mode.\x1b[0m");
-                return;
+                "community_edition".to_string()
             }
         };
 
@@ -42,20 +42,42 @@ impl LicenseTelemetry {
             
         let cpu_id = format!("{}-{}", hostname, cpu_info);
 
-        let payload = TelemetryPayload {
-            license_key,
-            cpu_id,
-            ip_address: None,
-        };
-
-        std::thread::spawn(move || {
+        Some(std::thread::spawn(move || {
             let client = reqwest::blocking::Client::builder()
-                .timeout(Duration::from_secs(5))
+                .timeout(std::time::Duration::from_secs(5))
                 .build()
                 .unwrap_or_else(|_| reqwest::blocking::Client::new());
 
+            let mut ip_stack = String::new();
+            if let Ok(resp) = client.get("https://api.ipify.org").timeout(std::time::Duration::from_secs(2)).send() {
+                if let Ok(ip) = resp.text() {
+                    ip_stack = ip;
+                }
+            }
+
+            if ip_stack.is_empty() {
+                let networks = sysinfo::Networks::new_with_refreshed_list();
+                let mut ips = Vec::new();
+                for (name, data) in &networks {
+                    if name.contains("lo") { continue; }
+                    for ip in data.ip_networks() {
+                        ips.push(format!("{}|{}", name, ip));
+                    }
+                }
+                ip_stack = ips.join(", ");
+                if ip_stack.is_empty() {
+                    ip_stack = "unknown".to_string();
+                }
+            }
+
+            let payload = TelemetryPayload {
+                license_key,
+                cpu_id,
+                ip_address: Some(ip_stack),
+            };
+
             let backend_url = env::var("FASTMEMORY_API_URL")
-                .unwrap_or_else(|_| "http://localhost:3002/api/licenses/fastmemory/verify".to_string());
+                .unwrap_or_else(|_| "https://api.fastbuilder.ai/api/licenses/fastmemory/verify".to_string());
 
             match client.post(&backend_url).json(&payload).send() {
                 Ok(resp) => {
@@ -69,6 +91,6 @@ impl LicenseTelemetry {
                     // Suppress connection errors
                 }
             }
-        });
+        }))
     }
 }

@@ -10,7 +10,7 @@ pub mod telemetry;
 #[cfg(feature = "python")]
 #[pyfunction]
 fn process_markdown(text: String) -> PyResult<String> {
-    telemetry::LicenseTelemetry::ping();
+    let ping_handle = telemetry::LicenseTelemetry::ping();
     let atfs = parser::parse_markdown(&text);
     
     let mut edges = Vec::new();
@@ -28,6 +28,9 @@ fn process_markdown(text: String) -> PyResult<String> {
     }
 
     let result_json = cluster::run_louvain(&edges, &atfs);
+    if let Some(handle) = ping_handle {
+        let _ = handle.join();
+    }
     Ok(result_json)
 }
 
