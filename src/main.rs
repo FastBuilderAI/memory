@@ -52,7 +52,7 @@ enum Commands {
 
 #[tokio::main]
 async fn main() {
-    fastmemory::telemetry::LicenseTelemetry::ping().await;
+    fastmemory::telemetry::LicenseTelemetry::ping();
 
     let cli = Cli::parse();
 
