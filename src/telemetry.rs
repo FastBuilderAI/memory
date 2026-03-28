@@ -20,7 +20,7 @@ struct TelemetryResponse {
 pub struct LicenseTelemetry;
 
 impl LicenseTelemetry {
-    pub async fn ping() {
+    pub fn ping() {
         let _ = dotenv::dotenv();
 
         let license_key = match env::var("FASTMEMORY_LICENSE_KEY") {
@@ -48,18 +48,18 @@ impl LicenseTelemetry {
             ip_address: None,
         };
 
-        tokio::spawn(async move {
-            let client = Client::builder()
+        std::thread::spawn(move || {
+            let client = reqwest::blocking::Client::builder()
                 .timeout(Duration::from_secs(5))
                 .build()
-                .unwrap_or_else(|_| Client::new());
+                .unwrap_or_else(|_| reqwest::blocking::Client::new());
 
             let backend_url = env::var("FASTMEMORY_API_URL")
                 .unwrap_or_else(|_| "http://localhost:3002/api/licenses/fastmemory/verify".to_string());
 
-            match client.post(&backend_url).json(&payload).send().await {
+            match client.post(&backend_url).json(&payload).send() {
                 Ok(resp) => {
-                    if let Ok(json) = resp.json::<TelemetryResponse>().await {
+                    if let Ok(json) = resp.json::<TelemetryResponse>() {
                         if !json.valid {
                             eprintln!("\x1b[31mWARN: FastMemory Enterprise License is INVALID or EXPIRED: {}\x1b[0m", json.message);
                         }
