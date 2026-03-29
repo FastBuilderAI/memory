@@ -10,7 +10,7 @@ mod mcp;
 
 #[derive(Parser)]
 #[command(name = "fastmemory")]
-#[command(about = "CBFDAE Ontology Clustering Engine", long_about = None)]
+#[command(about = "Topology Ontology Clustering Engine", long_about = None)]
 struct Cli {
     #[command(subcommand)]
     command: Option<Commands>,

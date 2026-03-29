@@ -1,6 +1,6 @@
 # FastMemory Production Scaling: Graph Database Integration
 
-When transitioning from local file-based memory to large-scale enterprise deployments, FastMemory leverages its hierarchical CBFDAE ontology to seed directly into Graph Databases. This allows AI agents to persist, traverse, and execute partial updates on a massive, distributed cognitive graph over time.
+When transitioning from local file-based memory to large-scale enterprise deployments, FastMemory leverages its hierarchical Topology ontology to seed directly into Graph Databases. This allows AI agents to persist, traverse, and execute partial updates on a massive, distributed cognitive graph over time.
 
 This guide demonstrates how to deploy FastMemory at scale using **Neo4J**.
 
@@ -20,7 +20,7 @@ By pushing the FastMemory JSON output directly into Neo4J, your AI agents can pe
 
 ## 🚀 2. Neo4J Ingestion Pipeline
 
-To push a FastMemory CBFDAE graph into Neo4J, you simply pipe the JSON output of the `fastmemory build` command into a lightweight ingestion script.
+To push a FastMemory Topology graph into Neo4J, you simply pipe the JSON output of the `fastmemory build` command into a lightweight ingestion script.
 
 ### 2.1. Initial Graph Ingestion (Python)
 
@@ -65,7 +65,7 @@ with GraphDatabase.driver(URI, auth=AUTH) as driver:
     with driver.session() as session:
         session.execute_write(ingest_fastmemory_graph, graph_data["nodes"], graph_data["links"])
         
-print("Successfully ingested FastMemory CBFDAE Graph into Neo4J!")
+print("Successfully ingested FastMemory Topology Graph into Neo4J!")
 ```
 
 ---
