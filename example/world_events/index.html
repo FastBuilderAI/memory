@@ -60,7 +60,7 @@
             const links = [];
             const numNodes = 40;
             for(let i=0; i<numNodes; i++) {
-                nodes.push({ id: "Chunk_" + i, name: "Vector Chunk " + i, size: 6, group: 0, desc: "Raw text embedding", isBlock: false, cbfdae: "Vector" });
+                nodes.push({ id: "Chunk_" + i, name: "Vector Chunk " + i, size: 6, group: 0, desc: "Raw text embedding", isBlock: false, topology: "Vector" });
             }
             for(let i=0; i<numNodes; i++) {
                 // Connect to 3-5 random nearest neighbors densely
@@ -90,7 +90,7 @@
                 blocks.forEach((block, i) => {
                     const blockId = block.id;
                     if (!nodeMap.has(blockId)) {
-                        nodes.push({ id: blockId, group: i+1, name: block.name, size: block.node_count * 10 + 10, isBlock: true, cbfdae: block.cbfdae_level || "Block", desc: "Block type: " + block.layer });
+                        nodes.push({ id: blockId, group: i+1, name: block.name, size: block.node_count * 10 + 10, isBlock: true, topology: block.topology_level || "Block", desc: "Block type: " + block.layer });
                         nodeMap.set(blockId, true);
                     }
                     
@@ -101,20 +101,20 @@
                     if (block.nodes && Array.isArray(block.nodes)) {
                         block.nodes.forEach(n => {
                             if(!nodeMap.has(n.id)) {
-                                // Color styling based on cbfdae level
+                                // Color styling based on topology level
                                 let n_color = "#3b82f6"; // Blue default
-                                if (n.cbfdae_level === "Data") n_color = "#eab308"; // Yellow
-                                if (n.cbfdae_level === "Access") n_color = "#22c55e"; // Green
-                                if (n.cbfdae_level === "Event") n_color = "#ef4444"; // Red
-                                if (n.cbfdae_level === "Function") n_color = "#8b5cf6"; // Purple
+                                if (n.topology_level === "Data") n_color = "#eab308"; // Yellow
+                                if (n.topology_level === "Access") n_color = "#22c55e"; // Green
+                                if (n.topology_level === "Event") n_color = "#ef4444"; // Red
+                                if (n.topology_level === "Function") n_color = "#8b5cf6"; // Purple
 
-                                nodes.push({ id: n.id, action: n.action, group: i+1, name: n.id, size: n.cbfdae_level === "Function" ? 8 : 6, isBlock: false, cbfdae: n.cbfdae_level || "Function", desc: "Action: " + (n.action||"none"), color: n_color });
+                                nodes.push({ id: n.id, action: n.action, group: i+1, name: n.id, size: n.topology_level === "Function" ? 8 : 6, isBlock: false, topology: n.topology_level || "Function", desc: "Action: " + (n.action||"none"), color: n_color });
                                 nodeMap.set(n.id, true);
                             }
                             // Strong explicit logical edge (Hierarchy C/B -> Node)
                             links.push({ source: n.id, target: blockId, value: 1, linkType: "hierarchy" });
                             
-                            if (n.cbfdae_level === "Function") {
+                            if (n.topology_level === "Function") {
                                 if (n.data_connections && Array.isArray(n.data_connections)) {
                                     n.data_connections.forEach(target => {
                                         links.push({ source: n.id, target: target, value: 0.2, linkType: "data" });
@@ -220,7 +220,7 @@
                             .attr("dy", "14")
                             .attr("font-size", "10px")
                             .attr("fill", d.isBlock ? "#cbd5e1" : "#64748b")
-                            .text(d.isBlock ? d.cbfdae : d.action || "Node");
+                            .text(d.isBlock ? d.topology : d.action || "Node");
                     });
             }
 

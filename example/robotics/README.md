@@ -21,8 +21,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
 ```json
 [
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "experience",
@@ -43,7 +43,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Analyst"
         ],
         "action": "Process_Experience_Sunset",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_experience",
           "D_virtual",
@@ -56,30 +56,30 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "experience",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_experience"
       },
       {
         "action": "martian",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_martian"
       },
       {
         "action": "Trigger_On_Experience_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Experience_Modify"
       },
       {
         "action": "virtual",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_virtual"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "modify",
@@ -93,7 +93,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Experience_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Experience_Modify"
           }
         ],
@@ -101,8 +101,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "sub_blocks": []
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "experience",
@@ -119,17 +119,17 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "martian",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_martian"
           },
           {
             "action": "experience",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_experience"
           },
           {
             "action": "virtual",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_virtual"
           },
           {
@@ -137,7 +137,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Analyst"
             ],
             "action": "Process_Experience_Sunset",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_experience",
               "D_virtual",
@@ -152,8 +152,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "parent_id": "block:rust:5",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "martian",
@@ -172,7 +172,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Analyst"
                 ],
                 "action": "Process_Experience_Sunset",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_experience",
                   "D_virtual",
@@ -185,20 +185,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               },
               {
                 "action": "experience",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_experience"
               },
               {
                 "action": "martian",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_martian"
               }
             ],
             "parent_id": "block:rust:block:rust:5:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "martian",
@@ -213,7 +213,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "martian",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_martian"
                   },
                   {
@@ -221,7 +221,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Analyst"
                     ],
                     "action": "Process_Experience_Sunset",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_experience",
                       "D_virtual",
@@ -237,8 +237,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "experience",
@@ -252,7 +252,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "experience",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_experience"
                   }
                 ],
@@ -262,8 +262,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             ]
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "virtual",
@@ -277,7 +277,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "virtual",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_virtual"
               }
             ],
@@ -289,8 +289,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "mission",
@@ -308,12 +308,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "mission",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_mission"
       },
       {
         "action": "Trigger_On_Mission_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Mission_Modify"
       },
       {
@@ -321,7 +321,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Analyst"
         ],
         "action": "Process_Mission_Mars",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_about",
           "D_mission",
@@ -334,20 +334,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "about",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_about"
       },
       {
         "action": "award",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_award"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "trigger",
@@ -361,7 +361,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Mission_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Mission_Modify"
           }
         ],
@@ -369,8 +369,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "sub_blocks": []
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "mission",
@@ -390,7 +390,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Analyst"
             ],
             "action": "Process_Mission_Mars",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_about",
               "D_mission",
@@ -403,25 +403,25 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "mission",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_mission"
           },
           {
             "action": "about",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_about"
           },
           {
             "action": "award",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_award"
           }
         ],
         "parent_id": "block:rust:2",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "mission",
@@ -435,7 +435,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "mission",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_mission"
               }
             ],
@@ -443,8 +443,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "award",
@@ -460,7 +460,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "about",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_about"
               },
               {
@@ -468,7 +468,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Analyst"
                 ],
                 "action": "Process_Mission_Mars",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_about",
                   "D_mission",
@@ -481,15 +481,15 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               },
               {
                 "action": "award",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_award"
               }
             ],
             "parent_id": "block:rust:block:rust:2:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "about",
@@ -503,7 +503,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "about",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_about"
                   }
                 ],
@@ -511,8 +511,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "award",
@@ -527,7 +527,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "award",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_award"
                   },
                   {
@@ -535,7 +535,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Analyst"
                     ],
                     "action": "Process_Mission_Mars",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_about",
                       "D_mission",
@@ -557,8 +557,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "online",
@@ -576,17 +576,17 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "shopping",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_shopping"
       },
       {
         "action": "Trigger_On_Online_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Online_Modify"
       },
       {
         "action": "great",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_great"
       },
       {
@@ -594,7 +594,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Operator"
         ],
         "action": "Process_Online_Shopping",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_online",
           "D_shopping",
@@ -607,15 +607,15 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "online",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_online"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "modify",
@@ -629,7 +629,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Online_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Online_Modify"
           }
         ],
@@ -637,8 +637,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "sub_blocks": []
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "online",
@@ -655,12 +655,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "great",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_great"
           },
           {
             "action": "online",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_online"
           },
           {
@@ -668,7 +668,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Operator"
             ],
             "action": "Process_Online_Shopping",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_online",
               "D_shopping",
@@ -681,15 +681,15 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "shopping",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_shopping"
           }
         ],
         "parent_id": "block:rust:7",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "shopping",
@@ -703,7 +703,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "shopping",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_shopping"
               }
             ],
@@ -711,8 +711,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "online",
@@ -731,7 +731,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Operator"
                 ],
                 "action": "Process_Online_Shopping",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_online",
                   "D_shopping",
@@ -744,20 +744,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               },
               {
                 "action": "online",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_online"
               },
               {
                 "action": "great",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_great"
               }
             ],
             "parent_id": "block:rust:block:rust:7:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "atf",
@@ -772,7 +772,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "online",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_online"
                   },
                   {
@@ -780,7 +780,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Operator"
                     ],
                     "action": "Process_Online_Shopping",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_online",
                       "D_shopping",
@@ -796,8 +796,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "great",
@@ -811,7 +811,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "great",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_great"
                   }
                 ],
@@ -825,8 +825,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.3333333333333333,
     "depth": 0,
     "domain": "atf",
@@ -848,7 +848,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Analyst"
         ],
         "action": "Process_Toys_Learning",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_educational",
           "D_designed",
@@ -861,35 +861,35 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "Role_Analyst",
-        "cbfdae_level": "Access",
+        "topology_level": "Access",
         "id": "A_Role_Analyst"
       },
       {
         "action": "inspire",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_inspire"
       },
       {
         "action": "educational",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_educational"
       },
       {
         "action": "designed",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_designed"
       },
       {
         "action": "Trigger_On_Toys_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Toys_Modify"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.4,
         "depth": 1,
         "domain": "inspire",
@@ -907,12 +907,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "inspire",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_inspire"
           },
           {
             "action": "designed",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_designed"
           },
           {
@@ -920,7 +920,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Analyst"
             ],
             "action": "Process_Toys_Learning",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_educational",
               "D_designed",
@@ -933,20 +933,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "educational",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_educational"
           },
           {
             "action": "Role_Analyst",
-            "cbfdae_level": "Access",
+            "topology_level": "Access",
             "id": "A_Role_Analyst"
           }
         ],
         "parent_id": "block:rust:0",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "inspire",
@@ -960,7 +960,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "inspire",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_inspire"
               }
             ],
@@ -968,8 +968,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "educational",
@@ -983,7 +983,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "educational",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_educational"
               }
             ],
@@ -991,8 +991,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "analyst",
@@ -1008,12 +1008,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "Role_Analyst",
-                "cbfdae_level": "Access",
+                "topology_level": "Access",
                 "id": "A_Role_Analyst"
               },
               {
                 "action": "designed",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_designed"
               },
               {
@@ -1021,7 +1021,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Analyst"
                 ],
                 "action": "Process_Toys_Learning",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_educational",
                   "D_designed",
@@ -1036,8 +1036,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "parent_id": "block:rust:block:rust:0:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "atf",
@@ -1052,7 +1052,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "designed",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_designed"
                   },
                   {
@@ -1060,7 +1060,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Analyst"
                     ],
                     "action": "Process_Toys_Learning",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_educational",
                       "D_designed",
@@ -1076,8 +1076,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "role",
@@ -1091,7 +1091,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "Role_Analyst",
-                    "cbfdae_level": "Access",
+                    "topology_level": "Access",
                     "id": "A_Role_Analyst"
                   }
                 ],
@@ -1103,8 +1103,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         ]
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "modify",
@@ -1118,7 +1118,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Toys_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Toys_Modify"
           }
         ],
@@ -1128,8 +1128,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "explorers",
@@ -1147,7 +1147,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "explorers",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_explorers"
       },
       {
@@ -1155,7 +1155,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Operator"
         ],
         "action": "Process_Explorers_Foot",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_intrepid",
           "D_explorers",
@@ -1168,25 +1168,25 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "Trigger_On_Explorers_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Explorers_Modify"
       },
       {
         "action": "intrepid",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_intrepid"
       },
       {
         "action": "looking",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_looking"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "trigger",
@@ -1200,7 +1200,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Explorers_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Explorers_Modify"
           }
         ],
@@ -1208,8 +1208,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "sub_blocks": []
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "intrepid",
@@ -1226,12 +1226,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "explorers",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_explorers"
           },
           {
             "action": "intrepid",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_intrepid"
           },
           {
@@ -1239,7 +1239,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Operator"
             ],
             "action": "Process_Explorers_Foot",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_intrepid",
               "D_explorers",
@@ -1252,15 +1252,15 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "looking",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_looking"
           }
         ],
         "parent_id": "block:rust:6",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "intrepid",
@@ -1276,12 +1276,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "explorers",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_explorers"
               },
               {
                 "action": "intrepid",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_intrepid"
               },
               {
@@ -1289,7 +1289,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Operator"
                 ],
                 "action": "Process_Explorers_Foot",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_intrepid",
                   "D_explorers",
@@ -1304,8 +1304,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "parent_id": "block:rust:block:rust:6:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "explorers",
@@ -1319,7 +1319,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "explorers",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_explorers"
                   }
                 ],
@@ -1327,8 +1327,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "atf",
@@ -1343,7 +1343,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "intrepid",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_intrepid"
                   },
                   {
@@ -1351,7 +1351,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Operator"
                     ],
                     "action": "Process_Explorers_Foot",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_intrepid",
                       "D_explorers",
@@ -1369,8 +1369,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             ]
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "looking",
@@ -1384,7 +1384,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "looking",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_looking"
               }
             ],
@@ -1396,8 +1396,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.2222222222222222,
     "depth": 0,
     "domain": "trigger",
@@ -1419,17 +1419,17 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "Trigger_On_Curiosity_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Curiosity_Modify"
       },
       {
         "action": "curiosity",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_curiosity"
       },
       {
         "action": "lowangle",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_lowangle"
       },
       {
@@ -1437,7 +1437,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Operator"
         ],
         "action": "Process_Curiosity_Rover",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_curiosity",
           "D_rover",
@@ -1453,7 +1453,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Operator"
         ],
         "action": "Process_Self-Portrait_Curiosity",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_lowangle",
           "D_selfportrait",
@@ -1466,30 +1466,30 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "selfportrait",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_selfportrait"
       },
       {
         "action": "taught",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_taught"
       },
       {
         "action": "rover",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_rover"
       },
       {
         "action": "Trigger_On_Self-Portrait_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Self-Portrait_Modify"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "modify",
@@ -1506,12 +1506,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Curiosity_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Curiosity_Modify"
           },
           {
             "action": "taught",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_taught"
           },
           {
@@ -1519,7 +1519,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Operator"
             ],
             "action": "Process_Curiosity_Rover",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_curiosity",
               "D_rover",
@@ -1532,15 +1532,15 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "rover",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_rover"
           }
         ],
         "parent_id": "block:rust:4",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "rover",
@@ -1559,7 +1559,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Operator"
                 ],
                 "action": "Process_Curiosity_Rover",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_curiosity",
                   "D_rover",
@@ -1572,20 +1572,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               },
               {
                 "action": "rover",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_rover"
               },
               {
                 "action": "taught",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_taught"
               }
             ],
             "parent_id": "block:rust:block:rust:4:1",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "taught",
@@ -1603,7 +1603,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Operator"
                     ],
                     "action": "Process_Curiosity_Rover",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_curiosity",
                       "D_rover",
@@ -1616,7 +1616,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   },
                   {
                     "action": "taught",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_taught"
                   }
                 ],
@@ -1624,8 +1624,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "rover",
@@ -1639,7 +1639,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "rover",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_rover"
                   }
                 ],
@@ -1649,8 +1649,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             ]
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "curiosity",
@@ -1664,7 +1664,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "Trigger_On_Curiosity_Modify",
-                "cbfdae_level": "Event",
+                "topology_level": "Event",
                 "id": "E_Trigger_On_Curiosity_Modify"
               }
             ],
@@ -1674,8 +1674,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         ]
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.4,
         "depth": 1,
         "domain": "curiosity",
@@ -1693,12 +1693,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "lowangle",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_lowangle"
           },
           {
             "action": "curiosity",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_curiosity"
           },
           {
@@ -1706,7 +1706,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Operator"
             ],
             "action": "Process_Self-Portrait_Curiosity",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_lowangle",
               "D_selfportrait",
@@ -1719,20 +1719,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "selfportrait",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_selfportrait"
           },
           {
             "action": "Trigger_On_Self-Portrait_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Self-Portrait_Modify"
           }
         ],
         "parent_id": "block:rust:4",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "curiosity",
@@ -1748,12 +1748,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "lowangle",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_lowangle"
               },
               {
                 "action": "curiosity",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_curiosity"
               },
               {
@@ -1761,7 +1761,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Operator"
                 ],
                 "action": "Process_Self-Portrait_Curiosity",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_lowangle",
                   "D_selfportrait",
@@ -1776,8 +1776,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "parent_id": "block:rust:block:rust:4:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "atf",
@@ -1792,7 +1792,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "lowangle",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_lowangle"
                   },
                   {
@@ -1800,7 +1800,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Operator"
                     ],
                     "action": "Process_Self-Portrait_Curiosity",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_lowangle",
                       "D_selfportrait",
@@ -1816,8 +1816,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "curiosity",
@@ -1831,7 +1831,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "curiosity",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_curiosity"
                   }
                 ],
@@ -1841,8 +1841,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             ]
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "self",
@@ -1856,7 +1856,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "Trigger_On_Self-Portrait_Modify",
-                "cbfdae_level": "Event",
+                "topology_level": "Event",
                 "id": "E_Trigger_On_Self-Portrait_Modify"
               }
             ],
@@ -1864,8 +1864,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "selfportrait",
@@ -1879,7 +1879,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "selfportrait",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_selfportrait"
               }
             ],
@@ -1891,8 +1891,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "astronomers",
@@ -1910,22 +1910,22 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "astronomers",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_astronomers"
       },
       {
         "action": "peering",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_peering"
       },
       {
         "action": "centuries",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_centuries"
       },
       {
         "action": "Trigger_On_Astronomers_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Astronomers_Modify"
       },
       {
@@ -1933,7 +1933,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Operator"
         ],
         "action": "Process_Astronomers_Mars",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_astronomers",
           "D_peering",
@@ -1948,8 +1948,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "atf",
@@ -1969,7 +1969,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Operator"
             ],
             "action": "Process_Astronomers_Mars",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_astronomers",
               "D_peering",
@@ -1982,25 +1982,25 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "astronomers",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_astronomers"
           },
           {
             "action": "peering",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_peering"
           },
           {
             "action": "centuries",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_centuries"
           }
         ],
         "parent_id": "block:rust:3",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "peering",
@@ -2014,7 +2014,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "peering",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_peering"
               }
             ],
@@ -2022,8 +2022,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "centuries",
@@ -2042,7 +2042,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Operator"
                 ],
                 "action": "Process_Astronomers_Mars",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_astronomers",
                   "D_peering",
@@ -2055,20 +2055,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               },
               {
                 "action": "centuries",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_centuries"
               },
               {
                 "action": "astronomers",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_astronomers"
               }
             ],
             "parent_id": "block:rust:block:rust:3:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "atf",
@@ -2083,7 +2083,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "centuries",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_centuries"
                   },
                   {
@@ -2091,7 +2091,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Operator"
                     ],
                     "action": "Process_Astronomers_Mars",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_astronomers",
                       "D_peering",
@@ -2107,8 +2107,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "astronomers",
@@ -2122,7 +2122,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "astronomers",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_astronomers"
                   }
                 ],
@@ -2134,8 +2134,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         ]
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "astronomers",
@@ -2149,7 +2149,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Astronomers_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Astronomers_Modify"
           }
         ],
@@ -2159,8 +2159,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "settlement",
@@ -2178,7 +2178,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "permanent",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_permanent"
       },
       {
@@ -2186,7 +2186,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Analyst"
         ],
         "action": "Process_Settlement_Humans",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_permanent",
           "D_settlement",
@@ -2199,25 +2199,25 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "sending",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_sending"
       },
       {
         "action": "settlement",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_settlement"
       },
       {
         "action": "Trigger_On_Settlement_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Settlement_Modify"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "permanent",
@@ -2234,7 +2234,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "settlement",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_settlement"
           },
           {
@@ -2242,7 +2242,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Analyst"
             ],
             "action": "Process_Settlement_Humans",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_permanent",
               "D_settlement",
@@ -2255,20 +2255,20 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           },
           {
             "action": "permanent",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_permanent"
           },
           {
             "action": "sending",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_sending"
           }
         ],
         "parent_id": "block:rust:8",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "settlement",
@@ -2282,7 +2282,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "settlement",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_settlement"
               }
             ],
@@ -2290,8 +2290,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "permanent",
@@ -2307,12 +2307,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "permanent",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_permanent"
               },
               {
                 "action": "sending",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_sending"
               },
               {
@@ -2320,7 +2320,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Analyst"
                 ],
                 "action": "Process_Settlement_Humans",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_permanent",
                   "D_settlement",
@@ -2335,8 +2335,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "parent_id": "block:rust:block:rust:8:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "permanent",
@@ -2350,7 +2350,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "permanent",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_permanent"
                   }
                 ],
@@ -2358,8 +2358,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "sending",
@@ -2377,7 +2377,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Analyst"
                     ],
                     "action": "Process_Settlement_Humans",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_permanent",
                       "D_settlement",
@@ -2390,7 +2390,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   },
                   {
                     "action": "sending",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_sending"
                   }
                 ],
@@ -2402,8 +2402,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         ]
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "modify",
@@ -2417,7 +2417,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Settlement_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Settlement_Modify"
           }
         ],
@@ -2427,8 +2427,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     ]
   },
   {
-    "block_type": "cbfdae_memory",
-    "cbfdae_level": "Component",
+    "block_type": "topology_memory",
+    "topology_level": "Component",
     "cohesion": 0.4,
     "depth": 0,
     "domain": "brian",
@@ -2446,17 +2446,17 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
     "nodes": [
       {
         "action": "Trigger_On_Brian_Modify",
-        "cbfdae_level": "Event",
+        "topology_level": "Event",
         "id": "E_Trigger_On_Brian_Modify"
       },
       {
         "action": "Role_Operator",
-        "cbfdae_level": "Access",
+        "topology_level": "Access",
         "id": "A_Role_Operator"
       },
       {
         "action": "brian",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_brian"
       },
       {
@@ -2464,7 +2464,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
           "A_Role_Operator"
         ],
         "action": "Process_Brian_Palma",
-        "cbfdae_level": "Function",
+        "topology_level": "Function",
         "data_connections": [
           "D_brian",
           "D_palmas",
@@ -2477,15 +2477,15 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
       },
       {
         "action": "palmas",
-        "cbfdae_level": "Data",
+        "topology_level": "Data",
         "id": "D_palmas"
       }
     ],
     "parent_id": null,
     "sub_blocks": [
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 1.0,
         "depth": 1,
         "domain": "modify",
@@ -2499,7 +2499,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "Trigger_On_Brian_Modify",
-            "cbfdae_level": "Event",
+            "topology_level": "Event",
             "id": "E_Trigger_On_Brian_Modify"
           }
         ],
@@ -2507,8 +2507,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "sub_blocks": []
       },
       {
-        "block_type": "cbfdae_memory",
-        "cbfdae_level": "Block",
+        "block_type": "topology_memory",
+        "topology_level": "Block",
         "cohesion": 0.5,
         "depth": 1,
         "domain": "palmas",
@@ -2525,17 +2525,17 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "nodes": [
           {
             "action": "palmas",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_palmas"
           },
           {
             "action": "Role_Operator",
-            "cbfdae_level": "Access",
+            "topology_level": "Access",
             "id": "A_Role_Operator"
           },
           {
             "action": "brian",
-            "cbfdae_level": "Data",
+            "topology_level": "Data",
             "id": "D_brian"
           },
           {
@@ -2543,7 +2543,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
               "A_Role_Operator"
             ],
             "action": "Process_Brian_Palma",
-            "cbfdae_level": "Function",
+            "topology_level": "Function",
             "data_connections": [
               "D_brian",
               "D_palmas",
@@ -2558,8 +2558,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
         "parent_id": "block:rust:1",
         "sub_blocks": [
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 1.0,
             "depth": 2,
             "domain": "palmas",
@@ -2573,7 +2573,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "palmas",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_palmas"
               }
             ],
@@ -2581,8 +2581,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "sub_blocks": []
           },
           {
-            "block_type": "cbfdae_memory",
-            "cbfdae_level": "Block",
+            "block_type": "topology_memory",
+            "topology_level": "Block",
             "cohesion": 0.6666666666666666,
             "depth": 2,
             "domain": "operator",
@@ -2598,12 +2598,12 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "nodes": [
               {
                 "action": "Role_Operator",
-                "cbfdae_level": "Access",
+                "topology_level": "Access",
                 "id": "A_Role_Operator"
               },
               {
                 "action": "brian",
-                "cbfdae_level": "Data",
+                "topology_level": "Data",
                 "id": "D_brian"
               },
               {
@@ -2611,7 +2611,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   "A_Role_Operator"
                 ],
                 "action": "Process_Brian_Palma",
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "data_connections": [
                   "D_brian",
                   "D_palmas",
@@ -2626,8 +2626,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
             "parent_id": "block:rust:block:rust:1:0",
             "sub_blocks": [
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "atf",
@@ -2645,7 +2645,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                       "A_Role_Operator"
                     ],
                     "action": "Process_Brian_Palma",
-                    "cbfdae_level": "Function",
+                    "topology_level": "Function",
                     "data_connections": [
                       "D_brian",
                       "D_palmas",
@@ -2658,7 +2658,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                   },
                   {
                     "action": "brian",
-                    "cbfdae_level": "Data",
+                    "topology_level": "Data",
                     "id": "D_brian"
                   }
                 ],
@@ -2666,8 +2666,8 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "sub_blocks": []
               },
               {
-                "block_type": "cbfdae_memory",
-                "cbfdae_level": "Block",
+                "block_type": "topology_memory",
+                "topology_level": "Block",
                 "cohesion": 1.0,
                 "depth": 3,
                 "domain": "operator",
@@ -2681,7 +2681,7 @@ The compiled JSON data is **loaded from `output.js`** to overcome CORS restricti
                 "nodes": [
                   {
                     "action": "Role_Operator",
-                    "cbfdae_level": "Access",
+                    "topology_level": "Access",
                     "id": "A_Role_Operator"
                   }
                 ],
