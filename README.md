@@ -4,7 +4,7 @@
 
 [![🏆 SOTA on 13 Benchmarks](https://img.shields.io/badge/HuggingFace-SOTA%20on%2013%20Benchmarks-blue?logo=huggingface)](https://huggingface.co/fastbuilderai/FastMemory)
 
-**FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **CBFDAE** (Component, Block, Function, Data, Access, Event) taxonomy.
+**FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **Topology** (Component, Block, Function, Data, Access, Event) taxonomy.
 
 Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the gap between shallow vector retrieval (RAG) and deterministic computational memory.
 
@@ -32,7 +32,7 @@ If you asked a humanoid robot to navigate to a hospital using this map, it would
 
 **That is exactly what happens when you use standard RAG, semantic ontologies, or flat vector graphs.**
 
-|                   Standard Ontology / RAG                   |                      FastMemory CBFDAE Map                       |
+|                   Standard Ontology / RAG                   |                      FastMemory Topology Map                       |
 | :---------------------------------------------------------: | :--------------------------------------------------------------: |
 | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/roads_only.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/structured_city.png" width="100%" /> |
 
@@ -44,7 +44,7 @@ You simply have node-to-node semantic edges. You possess the "roads" (cosine sim
 
 ## 🔍 Features & Benefits
 
-- **CBFDAE Ontology**: Information isn't just stored; it is classified into **C**omponents, **B**locks, **F**unctions, **D**ata, **A**ccess restrictions, and **E**vents.
+- **Topology Ontology**: Information isn't just stored; it is classified into **C**omponents, **B**locks, **F**unctions, **D**ata, **A**ccess restrictions, and **E**vents.
 - **Deterministic Pathfinding**: Eliminates RAG hallucinations. An AI doesn't "guess" the answer based on semantic proximity; it traverses a rigorous, rule-based logic graph.
 - **The Agentic Query Engine**: Deep recursive subtree targeting. When you query FastMemory, it doesn't just return a matching string—it returns the _deepest logical encompassing Block_, providing the AI with sibling functions and contextual boundaries.
 - **Enterprise Native**: Designed to sit on top of Datawarehouses, SAP, Databricks, AWS Glue, and Fabric.
@@ -148,9 +148,9 @@ markdown_text = """
 """
 
 # 2. Pass strings synchronously into the Rust engine
-cbfdae_json_graph = fastmemory.process_markdown(markdown_text)
+topology_json_graph = fastmemory.process_markdown(markdown_text)
 
-print(cbfdae_json_graph)
+print(topology_json_graph)
 ```
 
 ### 3. Running as an Enterprise Service
@@ -194,7 +194,7 @@ Data access within FastMemory is rigorously secured at the graph layer. Utilizin
 
 ## 🧠 Applications
 
-| Standard RAG Robot Brain | FastMemory CBFDAE Robot Brain |
+| Standard RAG Robot Brain | FastMemory Topology Robot Brain |
 | :---: | :---: |
 | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/robot_rag_memory.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/robot_fast_memory.png" width="100%" /> |
 
