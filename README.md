@@ -1,5 +1,7 @@
 # FastMemory
 
+![FastBuilder Benchmarks](banner.png)
+
 [![🏆 SOTA on 13 Benchmarks](https://img.shields.io/badge/HuggingFace-SOTA%20on%2013%20Benchmarks-blue?logo=huggingface)](https://huggingface.co/fastbuilderai/FastMemory)
 
 **FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **CBFDAE** (Component, Block, Function, Data, Access, Event) taxonomy.
