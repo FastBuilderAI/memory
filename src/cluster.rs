@@ -63,7 +63,7 @@ pub fn run_louvain(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>
         for atf in atfs {
             atf_map.insert(format!("F_{}", atf.id), serde_json::json!({
                 "id": format!("F_{}", atf.id),
-                "cbfdae_level": "Function",
+                "topology_level": "Function",
                 "action": atf.action,
                 "data_connections": atf.data_connections.iter().map(|d| format!("D_{}", d)).collect::<Vec<_>>(),
                 "access": atf.access.split(',').map(|s| format!("A_{}", s.trim())).filter(|s| s.len() > 2).collect::<Vec<_>>(),
@@ -82,13 +82,13 @@ pub fn run_louvain(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>
                 let original_name = obj.get("name").and_then(|v| v.as_str()).unwrap_or("Layer_Unknown").to_string();
                 
                 if depth == 0 {
-                    obj.insert("cbfdae_level".to_string(), serde_json::Value::String("Component".to_string()));
+                    obj.insert("topology_level".to_string(), serde_json::Value::String("Component".to_string()));
                     obj.insert("name".to_string(), serde_json::Value::String(format!("C - {}", original_name)));
                 } else {
-                    obj.insert("cbfdae_level".to_string(), serde_json::Value::String("Block".to_string()));
+                    obj.insert("topology_level".to_string(), serde_json::Value::String("Block".to_string()));
                     obj.insert("name".to_string(), serde_json::Value::String(format!("B - {}", original_name)));
                 }
-                obj.insert("block_type".to_string(), serde_json::Value::String("cbfdae_memory".to_string()));
+                obj.insert("block_type".to_string(), serde_json::Value::String("topology_memory".to_string()));
                 
                 if let Some(nodes) = obj.get_mut("nodes").and_then(|v| v.as_array_mut()) {
                     let mut full_nodes = Vec::new();
@@ -97,15 +97,15 @@ pub fn run_louvain(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>
                             if let Some(full_obj) = map.get(node_id) {
                                 full_nodes.push(full_obj.clone());
                             } else if node_id.starts_with("F_") {
-                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "cbfdae_level": "Function"}));
+                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "topology_level": "Function"}));
                             } else if node_id.starts_with("D_") {
-                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "cbfdae_level": "Data"}));
+                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "topology_level": "Data"}));
                             } else if node_id.starts_with("A_") {
-                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "cbfdae_level": "Access"}));
+                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "topology_level": "Access"}));
                             } else if node_id.starts_with("E_") {
-                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "cbfdae_level": "Event"}));
+                                full_nodes.push(serde_json::json!({"id": node_id, "action": &node_id[2..], "topology_level": "Event"}));
                             } else {
-                                full_nodes.push(serde_json::json!({"id": node_id, "action": node_id, "cbfdae_level": "Unknown"}));
+                                full_nodes.push(serde_json::json!({"id": node_id, "action": node_id, "topology_level": "Unknown"}));
                             }
                         } else if node.is_object() {
                             // If it's already an object, preserve it
