@@ -57,7 +57,7 @@ pub fn run_louvain(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>
     // Clean up
     let _ = fs::remove_file(temp_file);
 
-    // Map Louvain generic naming to CBFDAE schema
+    // Map Louvain generic naming to Topology schema
     if let Ok(mut parsed) = serde_json::from_str::<serde_json::Value>(&result_json) {
         let mut atf_map = std::collections::HashMap::new();
         for atf in atfs {

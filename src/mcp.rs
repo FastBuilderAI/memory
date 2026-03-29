@@ -28,7 +28,7 @@ pub async fn start_mcp_server(memory_json: String) {
                                 "tools": [
                                     {
                                         "name": "query_memory",
-                                        "description": "Query unstructured CBFDAE graph memory clusters for a specific keyword or entity",
+                                        "description": "Query unstructured Topology graph memory clusters for a specific keyword or entity",
                                         "inputSchema": {
                                             "type": "object",
                                             "properties": {

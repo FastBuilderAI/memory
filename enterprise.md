@@ -11,11 +11,11 @@ FastMemory is architected to integrate seamlessly into complex, high-throughput 
 
 ### 2. Data Lakes & Databricks (Delta Lake)
 * **PySpark Parsing**: Within Databricks or Delta Lake environments, utilize PySpark notebooks to run distributed NLP processing (similar to our `build_huggingface_examples.py` pipeline) over petabytes of raw text. Extract entities, roles, and events, then serialize them into FastMemory ATFs in bulk.
-* **Vector Store Synergy (Hybrid RAG)**: FastMemory is not a replacement for vector DBs (e.g., Pinecone, Milvus), but a **Structural Reasoning Layer** on top. Vector databases handle nearest-neighbor fuzzy matching, while FastMemory's CBFDAE clusters provide the logical, rule-based contexts (Components and Blocks) required for deterministic AI orchestration.
+* **Vector Store Synergy (Hybrid RAG)**: FastMemory is not a replacement for vector DBs (e.g., Pinecone, Milvus), but a **Structural Reasoning Layer** on top. Vector databases handle nearest-neighbor fuzzy matching, while FastMemory's Topology clusters provide the logical, rule-based contexts (Components and Blocks) required for deterministic AI orchestration.
 
 ### 3. AWS Ecosystem (Glue, S3, Athena)
 * **AWS Glue Crawlers & Jobs**: Configure AWS Glue Python Shell or Spark jobs to crawl raw S3 buckets, parse documents, and trigger the FastMemory binary as a containerized ECS task.
-* **S3 Persistence**: Store the generated `output.json` CBFDAE graphs back into Amazon S3. The FastMemory HTTP API (`fastmemory serve`) can be wrapped inside an AWS AppRunner or ECS Fargate service, securely serving queries to downstream applications.
+* **S3 Persistence**: Store the generated `output.json` Topology graphs back into Amazon S3. The FastMemory HTTP API (`fastmemory serve`) can be wrapped inside an AWS AppRunner or ECS Fargate service, securely serving queries to downstream applications.
 
 ### 4. Microsoft Fabric & OneLake
 * **OneLake Centralization**: Microsoft Fabric's OneLake can serve as the unified storage layer for both the raw ATF inputs and the clustered JSON outputs.
