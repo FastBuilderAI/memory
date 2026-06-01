@@ -1,6 +1,6 @@
 # FastMemory Production Scaling: Graph Database Integration
 
-When transitioning from local file-based memory to large-scale enterprise deployments, FastMemory leverages its hierarchical Topology ontology to seed directly into Graph Databases. This allows AI agents to persist, traverse, and execute partial updates on a massive, distributed cognitive graph over time.
+When transitioning from local file-based memory to large-scale production deployments, FastMemory leverages its hierarchical Topology ontology to seed directly into Graph Databases. This allows AI agents to persist, traverse, and execute partial updates on a massive, distributed cognitive graph over time.
 
 This guide demonstrates how to deploy FastMemory at scale using **Neo4J**.
 
@@ -26,7 +26,7 @@ To push a FastMemory Topology graph into Neo4J, you simply pipe the JSON output 
 
 ```bash
 # Generate the clustered cognitive graph
-$ fastmemory build data/enterprise_context.md > fastmemory_output.json
+$ fastmemory build data/context.md > fastmemory_output.json
 ```
 
 Use the snippet below to ingest `fastmemory_output.json` into Neo4J using the official `neo4j` Python driver:
@@ -72,7 +72,7 @@ print("Successfully ingested FastMemory Topology Graph into Neo4J!")
 
 ## 🔄 3. Partial Updates & Live Syncing
 
-As your enterprise codebase, SaaS platform, or agent logic changes, you don't need to rebuild the entire Neo4J database. FastMemory's isolated Block topology allows you to execute **Partial Updates**.
+As your codebase, SaaS platform, or agent logic changes, you don't need to rebuild the entire Neo4J database. FastMemory's isolated Block topology allows you to execute **Partial Updates**.
 
 If the underlying markdown for a specific component (e.g., the `PaymentGateway` Action) changes:
 1. Re-run `fastmemory build` specifically on the changed subset.

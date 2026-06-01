@@ -3,6 +3,7 @@
 ![FastBuilder Benchmarks](banner.png)
 
 [![🏆 SOTA on 13 Benchmarks](https://img.shields.io/badge/HuggingFace-SOTA%20on%2013%20Benchmarks-blue?logo=huggingface)](https://huggingface.co/fastbuilderai/FastMemory)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **Topology** (Component, Block, Function, Data, Access, Event) taxonomy.
 
@@ -17,14 +18,14 @@ Explore the full benchmark matrix and transparent execution traces on our offici
 ---
 
 ## ⚡ Quickstart: Try the RAG-Replacement
-- **[Run the FastMemory Demonstration Notebook (fastmemory_demo.ipynb)](file:///Users/prabhatsingh/FastBuilderAI-Sales/memory/fastmemory_demo.ipynb)**: Basic Topology Architecture.
-- **[Run the FinanceBench SOTA Notebook (fastmemory_financebench_sota.ipynb)](file:///Users/prabhatsingh/FastBuilderAI-Sales/memory/fastmemory_financebench_sota.ipynb)**: Advanced multi-hop financial reasoning.
+- **[Run the FastMemory Demonstration Notebook](fastmemory_demo.ipynb)**: Basic Topology Architecture.
+- **[Run the FinanceBench SOTA Notebook](fastmemory_financebench_sota.ipynb)**: Advanced multi-hop financial reasoning.
 
 ---
 
 ## 🤬 Developer Pain Points & The FastMemory Solution
 
-Building reliable AI agents on top of massive Enterprise codebases and datasets is incredibly hard. FastMemory directly solves the three biggest pain points developers face today:
+Building reliable AI agents on top of massive codebases and datasets is incredibly hard. FastMemory directly solves the three biggest pain points developers face today:
 
 1. **RAG Hallucinations**: Standard vector similarity retrieves unrelated text chunks just because they share keywords (e.g., retrieving the "Login Code" when the user asked about the "Login Bug Ticket"). FastMemory provides **Deterministic Pathfinding** through isolated functional clusters.
 2. **Context Fragmentation**: Naive text chunking destroys logical boundaries, losing the surrounding context of a function. FastMemory parses semantic topologies into grouped **Cognitive Blocks**, providing the AI with sibling functions and deterministic access restrictions.
@@ -55,7 +56,7 @@ You simply have node-to-node semantic edges. You possess the "roads" (cosine sim
 - **Topology Ontology**: Information isn't just stored; it is classified into **C**omponents, **B**locks, **F**unctions, **D**ata, **A**ccess restrictions, and **E**vents.
 - **Deterministic Pathfinding**: Eliminates RAG hallucinations. An AI doesn't "guess" the answer based on semantic proximity; it traverses a rigorous, rule-based logic graph.
 - **The Agentic Query Engine**: Deep recursive subtree targeting. When you query FastMemory, it doesn't just return a matching string—it returns the _deepest logical encompassing Block_, providing the AI with sibling functions and contextual boundaries.
-- **Enterprise Native**: Designed to sit on top of Datawarehouses, SAP, Databricks, AWS Glue, and Fabric.
+- **Production Ready**: Designed to scale from local development to large-scale production deployments with graph databases like Neo4J.
 
 ---
 
@@ -127,7 +128,7 @@ pip install fastmemory
 
 ## 🚀 Usage Guide
 
-FastMemory can be utilized natively from the command line, spun up as an enterprise REST server, or imported directly into your Python scripts.
+FastMemory can be utilized natively from the command line, spun up as a REST server, or imported directly into your Python scripts.
 
 ### 1. Terminal CLI (via Cargo)
 
@@ -161,12 +162,12 @@ topology_json_graph = fastmemory.process_markdown(markdown_text)
 print(topology_json_graph)
 ```
 
-### 3. Running as an Enterprise Service
+### 3. Running as a Service
 
 FastMemory ships with a highly optimized embedded Axum web server and MCP (Model Context Protocol) integration for AI agents:
 
 ```bash
-# Boot the REST API locally or enterprise-wide
+# Boot the REST API
 $ fastmemory serve data/input.md --port 16743
 # Query: curl http://localhost:16743/query?q=reimbursement
 
@@ -174,9 +175,9 @@ $ fastmemory serve data/input.md --port 16743
 $ fastmemory mcp data/input.md
 ```
 
-### 4. Enterprise Data Ingestion
+### 4. Data Ingestion
 
-In addition to positional file arguments, FastMemory supports enterprise-grade ingestion strings for dynamic pipelines:
+In addition to positional file arguments, FastMemory supports flexible ingestion for dynamic pipelines:
 
 - **Local Directories (`--data`)**: Pass a local directory to parse and cluster multiple ATF Markdown files continuously.
   ```bash
@@ -202,8 +203,16 @@ Data access within FastMemory is rigorously secured at the graph layer. Utilizin
 
 For a hands-on technical demonstration of how FastMemory replaces Vector RAG with deterministic Topology grounding, explore our interactive Jupyter Notebooks:
 
-- **[Basic Global Topology Notebook](file:///Users/prabhatsingh/FastBuilderAI-Sales/memory/fastmemory_demo.ipynb)**: Learn the core LangChain grounding loop and ATF extraction.
-- **[FinanceBench SOTA Notebook](file:///Users/prabhatsingh/FastBuilderAI-Sales/memory/fastmemory_financebench_sota.ipynb)**: Advanced demonstration of multi-hop financial reasoning using the Boeing 10-K dataset.
+- **[Basic Global Topology Notebook](fastmemory_demo.ipynb)**: Learn the core LangChain grounding loop and ATF extraction.
+- **[FinanceBench SOTA Notebook](fastmemory_financebench_sota.ipynb)**: Advanced demonstration of multi-hop financial reasoning using the Boeing 10-K dataset.
+
+---
+
+## 🏗️ Architecture & Integration Patterns
+
+FastMemory is designed to integrate into complex, high-throughput data ecosystems. While it natively clusters Markdown-based Atomic Text Functions (ATFs) via `rust-louvain`, in production environments where data is distributed across Data Warehouses, Data Lakes, and specialized analytics platforms, FastMemory acts as an **ontological orchestrator and agentic query engine** bridging structured pipelines and autonomous AI logic.
+
+For detailed integration patterns with Snowflake, BigQuery, Databricks, AWS Glue, Microsoft Fabric, and Neo4J, see the [Architecture Guide](architecture.md).
 
 ---
 
@@ -213,19 +222,40 @@ For a hands-on technical demonstration of how FastMemory replaces Vector RAG wit
 | :---: | :---: |
 | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/robot_rag_memory.png" width="100%" /> | <img src="https://raw.githubusercontent.com/FastBuilderAI/memory/main/example/analogies/robot_fast_memory.png" width="100%" /> |
 
-- **Agentic Apps & SaaS**: Integrate `fastmemory mcp` directly into your proprietary AI loops. Instead of sending agents to vector DBs, send them into a FastMemory graph where they can extract isolated, functional context blocks to execute SaaS workflows.
+- **Agentic Apps & SaaS**: Integrate `fastmemory mcp` directly into your proprietary AI loops. Instead of sending agents to vector DBs, send them into a FastMemory graph where they can extract isolated, functional context blocks to execute workflows.
 - **Fast Software Engineering**: In [FastBuilder.AI](https://fastbuilder.ai), FastMemory acts as the structural brain for rapid feature development. By indexing the entire application architecture into an ontological graph, coding agents can query precisely how a proposed change will impact distant, decoupled components.
-- **The Possibilities are Endless**: Medical diagnostics routing, autonomous drone navigation logic, enterprise compliance auditing, etc.
+- **The Possibilities are Endless**: Medical diagnostics routing, autonomous drone navigation logic, compliance auditing, etc.
 
 ---
 
-## 📄 License & Commercial Terms
+## 🏢 Commercial Support
 
-This project is licensed under the **MIT License**.
+FastMemory is and will always be **free and open-source under the MIT License**.
 
-**COMMERCIAL USE EXCEPTION**
-Notwithstanding the MIT License, any commercial entity, company, or organization that has generated gross revenue exceeding **USD $20,000,000** in its most recently completed fiscal year or current interim year must obtain an explicit commercial license from FastBuilder.AI prior to using, copying, modifying, merging, publishing, distributing, sublicensing, or selling copies of this Software.
+For teams and organizations that need managed deployments, compliance tooling, security monitoring, and dedicated support, we offer **[FastStudio](https://faststudio.fastbuilder.ai/)** — a packaged platform built on top of FastMemory that provides:
+
+- 🔒 **Compliance & Governance** (BuildRight) — automated ontological compliance rules
+- 🛡️ **Security Monitoring** (SafeSemantics) — real-time semantic threat detection
+- 📊 **Data Memory Management** — topology visualization, audit trails, and RBAC
+- 🤝 **Dedicated Support** — SLA-backed assistance from the FastMemory core team
 
 > [!NOTE]
-> **When is the Commercial License Necessary?**
-> For standard projects involving small or moderate numbers of documents, any basic Python script or standard semantic dictionary will suffice. FastMemory, however, is a **hyper-optimized, concurrent Rust Graph Processing Engine**. If your enterprise is parsing, isolating, and synchronizing **millions of documents** into systems like Neo4J and executing real-time partial updates, this engine is designed for your scale. The commercial license ensures FastBuilder.AI can continue maintaining and pushing the limits of this high-performance architecture.
+> You do **not** need FastStudio to use FastMemory. Every feature in this repository is fully functional and unrestricted. FastStudio is for teams that want a managed, production-hardened experience with compliance and security baked in.
+
+👉 **[Learn more about FastStudio →](https://faststudio.fastbuilder.ai/)**
+
+---
+
+## 📄 License
+
+This project is licensed under the **[MIT License](LICENSE)** — free for personal, commercial, and organizational use without restriction.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Whether it's bug fixes, new integration patterns, additional domain examples, or performance improvements — open a PR or start a discussion.
+
+---
+
+Built with 🛡️💻🧠 by [FastBuilder.AI](https://fastbuilder.ai)
