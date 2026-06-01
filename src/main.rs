@@ -22,7 +22,7 @@ struct Cli {
     #[arg(long, global = true)]
     data: Option<String>,
 
-    /// Enterprise remote data host URI (e.g. s3://bucket, postgres://db)
+    /// Remote data host URI (e.g. s3://bucket, postgres://db)
     #[arg(long, global = true)]
     datahost: Option<String>,
 }
@@ -90,7 +90,7 @@ async fn main() {
 
 fn resolve_and_build(cli: &Cli, cmd_file: Option<&String>) -> String {
     let content = if let Some(uri) = &cli.datahost {
-        eprintln!("[Info] Fetching remote enterprise data from {}", uri);
+        eprintln!("[Info] Fetching remote data from {}", uri);
         // Stub implementation for future remote integrations
         format!("## [ID: remote_stub]\n**Action:** Remote_Ingestion\n**Data_Connections:** {}\n**Access:** Role_Admin\n**Events:** remote_sync", uri)
     } else {
