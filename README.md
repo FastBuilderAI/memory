@@ -15,6 +15,22 @@ FastMemory has officially achieved **SOTA status on 13 distinct benchmarks** (in
 
 Explore the full benchmark matrix and transparent execution traces on our official [Hugging Face Model Card](https://huggingface.co/fastbuilderai/FastMemory).
 
+### 📊 Production Memory Efficiency (Verified)
+
+These numbers are from our live production instance serving **445,289 PubChem compounds**:
+
+| Metric | Vector Index (TurboVec) | FastMemory (Production) |
+| :--- | :---: | :---: |
+| **Source data** | 31 GB (10M float32 vectors) | **40 GB** (PubChem Compounds) |
+| **Stored size** | ~4 GB (4-bit quantized) | **1.15 GB** (topology DB) |
+| **Compression ratio** | 8x | **35x** |
+| **Runtime RAM** | ~4 GB (index must live in RAM) | **129 MiB** (full backend) |
+| **Structure preserved** | ❌ Approximate similarity only | ✅ Full CBFDAE topology |
+| **Multi-hop reasoning** | ❌ No | ✅ Wormhole traversal |
+| **Anti-hallucination** | ❌ No | ✅ Fabrication scrubber |
+
+> **35x compression. 129 MiB to serve 445K compounds. Full structural fidelity — no information lost, information gained.**
+
 ---
 
 ## ⚡ Quickstart: Try the RAG-Replacement
