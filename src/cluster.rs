@@ -7,12 +7,29 @@ struct Edge {
     target: String,
 }
 
-/// Pure-Rust inline Louvain community detection — no subprocess spawning.
-/// Takes edges and ATFs, returns fully-assembled topology JSON.
-pub fn run_louvain_inline(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>) -> String {
+/// Louvain clustering into topology JSON. Uses the native engine when its library is available (see
+/// `louvain_backend`), otherwise the inline Louvain below. Blocks are ordered by their smallest node id, so the output
+/// is the same in every process for the same partition.
+pub fn run_louvain(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>) -> String {
     if edges.is_empty() {
         return "[]".to_string();
     }
+    let part = crate::louvain_backend::partition(edges).unwrap_or_else(|| partition_inline(edges));
+    assemble(&part, atfs)
+}
+
+/// Kept for callers of earlier versions: now the same as `run_louvain` (backend chosen at run time).
+pub fn run_louvain_inline(edges: &Vec<(String, String)>, atfs: &Vec<crate::parser::Atf>) -> String {
+    run_louvain(edges, atfs)
+}
+
+/// Node -> community for the given edges, from whichever backend is in use (for embedding crates).
+pub fn partition(edges: &[(String, String)]) -> HashMap<String, usize> {
+    crate::louvain_backend::partition(edges).unwrap_or_else(|| partition_inline(edges))
+}
+
+/// Pure-Rust inline Louvain (phase 1: local modularity optimisation), no subprocess spawning.
+pub fn partition_inline(edges: &[(String, String)]) -> HashMap<String, usize> {
 
     // ── Step 1: Map string IDs to integer indices ──
     let mut node_to_idx: HashMap<&str, usize> = HashMap::new();
@@ -30,7 +47,7 @@ pub fn run_louvain_inline(edges: &Vec<(String, String)>, atfs: &Vec<crate::parse
 
     let n = idx_to_node.len();
     if n == 0 {
-        return "[]".to_string();
+        return HashMap::new();
     }
 
     // ── Step 2: Build adjacency + degree ──
@@ -47,7 +64,7 @@ pub fn run_louvain_inline(edges: &Vec<(String, String)>, atfs: &Vec<crate::parse
 
     let m = total_weight; // total edge weight (each edge counted once)
     if m == 0.0 {
-        return "[]".to_string();
+        return HashMap::new();
     }
 
     let mut degree: Vec<f64> = vec![0.0; n];
@@ -93,7 +110,11 @@ pub fn run_louvain_inline(edges: &Vec<(String, String)>, atfs: &Vec<crate::parse
             let mut best_comm = current_comm;
             let mut best_gain = 0.0;
 
-            for (&target_comm, &ki_in) in &neighbor_weights {
+            // candidate communities in id order: HashMap order is random per map, which made ties (and so the whole
+            // partition) differ between runs
+            let mut candidates: Vec<(usize, f64)> = neighbor_weights.iter().map(|(&c, &w)| (c, w)).collect();
+            candidates.sort_unstable_by_key(|x| x.0);
+            for (target_comm, ki_in) in candidates {
                 if target_comm == current_comm {
                     continue;
                 }
@@ -119,12 +140,20 @@ pub fn run_louvain_inline(edges: &Vec<(String, String)>, atfs: &Vec<crate::parse
         }
     }
 
+    (0..n).map(|i| (idx_to_node[i].to_string(), community[i])).collect()
+}
+
+/// Builds the topology JSON from a partition: one Component block per community, in order of each community's
+/// smallest node id, with nodes sorted by id.
+fn assemble(part: &HashMap<String, usize>, atfs: &Vec<crate::parser::Atf>) -> String {
     // ── Step 4: Build hierarchical output ──
-    // Group nodes by community
-    let mut communities: HashMap<usize, Vec<String>> = HashMap::new();
-    for i in 0..n {
-        communities.entry(community[i]).or_default().push(idx_to_node[i].to_string());
+    // Group nodes by community, in a process-independent order
+    let mut grouped: HashMap<usize, Vec<String>> = HashMap::new();
+    for (node, c) in part {
+        grouped.entry(*c).or_default().push(node.clone());
     }
+    let mut communities: Vec<(usize, Vec<String>)> = grouped.into_iter().map(|(c, mut v)| { v.sort(); (c, v) }).collect();
+    communities.sort_by(|a, b| a.1[0].cmp(&b.1[0]));
 
     // Build ATF lookup
     let mut atf_map: HashMap<String, serde_json::Value> = HashMap::new();

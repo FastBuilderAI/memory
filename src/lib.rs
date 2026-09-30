@@ -3,10 +3,13 @@ use pyo3::prelude::*;
 #[cfg(feature = "python")]
 use pyo3::types::PyList;
 
+#[cfg(feature = "python")]
 use std::env;
 
 pub mod parser;
 pub mod cluster;
+pub mod louvain_backend;
+#[cfg(feature = "telemetry")]
 pub mod telemetry;
 
 #[cfg(feature = "python")]

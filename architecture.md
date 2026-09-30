@@ -1,7 +1,7 @@
 # FastMemory Architecture & Integration Patterns
 
 ## Overview
-FastMemory is architected to integrate seamlessly into complex, high-throughput data ecosystems. While it natively clusters Markdown-based Atomic Text Functions (ATFs) via `Louvain`, in production environments where data is distributed across Data Warehouses, Data Lakes, and specialized analytics platforms (e.g., Databricks, Microsoft Fabric, AWS Glue), FastMemory acts as an **ontological orchestrator and agentic query engine** bridging structured pipelines and autonomous AI logic.
+FastMemory is architected to integrate seamlessly into complex, high-throughput data ecosystems. While it natively clusters Markdown-based Atomic Text Functions (ATFs) via Louvain, in production environments where data is distributed across Data Warehouses, Data Lakes, and specialized analytics platforms (e.g., Databricks, Microsoft Fabric, AWS Glue), FastMemory acts as an **ontological orchestrator and agentic query engine** bridging structured pipelines and autonomous AI logic.
 
 ## Integration Patterns
 

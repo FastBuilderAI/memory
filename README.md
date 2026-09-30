@@ -224,9 +224,34 @@ For a hands-on technical demonstration of how FastMemory replaces Vector RAG wit
 
 ---
 
+## 🧩 Clustering backend and embedding FastMemory
+
+- **Clustering:** FastMemory clusters with its optional native clustering engine when its compiled
+  library is available, and otherwise with the built-in Louvain.
+  - the native engine is loaded at run time from the first of these locations:
+    1. `FASTMEMORY_NATIVE_LIB`, which must be an absolute path;
+    2. the directory of the library that contains FastMemory, where packages bundle it;
+    3. the directory of the executable.
+
+    It is never loaded from the working directory or the system library search path.
+  - `louvain_backend::status()` reports which backend is in use, and why when it is the fallback.
+  - `FASTMEMORY_CLUSTER=builtin` forces the built-in Louvain.
+  - Settings: `FASTMEMORY_NATIVE_RESOLUTION` (default 1.0) and `FASTMEMORY_NATIVE_MAX_LEVELS` (default 0, which
+    means unlimited).
+  - Both backends give the same blocks for the same input in every run.
+- **Embedding the library:** use the core without the CLI, server and license telemetry:
+
+  ```toml
+  fastmemory = { version = "0.4", default-features = false }
+  ```
+
+  That leaves the parser, `cluster::partition` / `cluster::run_louvain` and the backend loader. It has no network
+  code and no async runtime. The default features keep the CLI, the server and the license check, which contacts
+  `api.fastbuilder.ai`.
+
 ## 🏗️ Architecture & Integration Patterns
 
-FastMemory is designed to integrate into complex, high-throughput data ecosystems. While it natively clusters Markdown-based Atomic Text Functions (ATFs) via `Louvain`, in production environments where data is distributed across Data Warehouses, Data Lakes, and specialized analytics platforms, FastMemory acts as an **ontological orchestrator and agentic query engine** bridging structured pipelines and autonomous AI logic.
+FastMemory is designed to integrate into complex, high-throughput data ecosystems. While it natively clusters Markdown-based Atomic Text Functions (ATFs) via Louvain, in production environments where data is distributed across Data Warehouses, Data Lakes, and specialized analytics platforms, FastMemory acts as an **ontological orchestrator and agentic query engine** bridging structured pipelines and autonomous AI logic.
 
 For detailed integration patterns with Snowflake, BigQuery, Databricks, AWS Glue, Microsoft Fabric, and Neo4J, see the [Architecture Guide](architecture.md).
 
