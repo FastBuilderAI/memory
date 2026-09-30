@@ -1,0 +1,66 @@
+# Builds release artifacts (wheels + sdist) for PyPI. Build only: publishing is done by a maintainer after the
+# artifacts are checked. Nothing here downloads or bundles any engine library: wheels contain only the
+# fastmemory extension module, which uses its built-in Louvain unless a licensed native engine is configured.
+name: wheels
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [x86_64, aarch64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: auto
+          args: --release --out dist --find-interpreter
+      - uses: actions/upload-artifact@v4
+        with: { name: "wheels-linux-${{ matrix.target }}", path: dist }
+
+  macos:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - { runner: macos-13, target: x86_64 }
+          - { runner: macos-14, target: aarch64 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.9\n3.10\n3.11\n3.12\n3.13" }
+      - uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --find-interpreter
+      - uses: actions/upload-artifact@v4
+        with: { name: "wheels-macos-${{ matrix.target }}", path: dist }
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.9\n3.10\n3.11\n3.12\n3.13" }
+      - uses: PyO3/maturin-action@v1
+        with:
+          target: x64
+          args: --release --out dist --find-interpreter
+      - uses: actions/upload-artifact@v4
+        with: { name: "wheels-windows-x64", path: dist }
+
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+      - uses: actions/upload-artifact@v4
+        with: { name: sdist, path: dist }

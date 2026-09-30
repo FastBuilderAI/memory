@@ -4,10 +4,10 @@ build-backend = "maturin"
 
 [project]
 name = "fastmemory"
-version = "0.4.2"
+version = "0.4.7"
 description = "FastBuilder.AI text memory graph cluster tool using Louvain"
 authors = [{ name = "FastBuilder.AI", email = "team@fastbuilder.ai" }]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 urls = { Repository = "https://github.com/FastBuilderAI/memory" }
 readme = "README.md"
 license = { text = "MIT" }
