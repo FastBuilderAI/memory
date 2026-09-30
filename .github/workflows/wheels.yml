@@ -33,7 +33,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { runner: macos-13, target: x86_64 }
+          - { runner: macos-14, target: x86_64 }   # Intel wheels cross-built on Apple Silicon (macos-13 runners retired)
           - { runner: macos-14, target: aarch64 }
     steps:
       - uses: actions/checkout@v4
