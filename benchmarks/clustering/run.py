@@ -154,6 +154,7 @@ def cluster(arm, edges, run):
     pos = {v: i for i, v in enumerate(perm)}           # relabel = shuffled order
     E = [(pos[a], pos[b]) for a, b in edges]
     random.Random(run).shuffle(E)
+    e0, ec0 = time.perf_counter(), time.process_time()  # clarification 4: end-to-end, from E to the labels
     if arm in ("N", "B"):
         import fastmemory
         S = [(str(a), str(b)) for a, b in E]
@@ -186,8 +187,9 @@ def cluster(arm, edges, run):
         G = nx.Graph(); G.add_nodes_from(range(len(nodes))); G.add_edges_from(E)
         comms, w, c = _timed(lambda: nx.community.louvain_communities(G, resolution=1.0, seed=run))
         lab = {v: k for k, comm in enumerate(comms) for v in comm}
+    e2e = (time.perf_counter() - e0, time.process_time() - ec0)
     inv = {i: v for v, i in pos.items()}
-    return {inv[i]: c_ for i, c_ in lab.items()}, w, c
+    return {inv[i]: c_ for i, c_ in lab.items()}, w, c, e2e
 
 
 _ARM_IMPORTS = {"N": ("fastmemory",), "B": ("fastmemory",), "LD": ("igraph", "leidenalg"), "LC": ("igraph", "leidenalg"),
@@ -245,8 +247,9 @@ def run_arm(arm, only=None):
         edges = load_edges(path)
         rec = []
         for r in range(RUNS):
-            part, w, c = cluster(arm, edges, r)
-            rec.append({"run": r, "wall_s": w, "cpu_s": c, "loadavg_1m": os.getloadavg()[0], "partition": part})
+            part, w, c, e2e = cluster(arm, edges, r)
+            rec.append({"run": r, "wall_s": w, "cpu_s": c, "e2e_wall_s": e2e[0], "e2e_cpu_s": e2e[1],
+                        "loadavg_1m": os.getloadavg()[0], "partition": part})
         rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1 << 20 if platform.system() == "Darwin" else 1 << 10)
         json.dump({"graph": name, "boot_id": boot, "boot_id_end": _boot_id(), "peak_rss_mb": rss, "runs": rec},
                   open(f + ".tmp", "w"))

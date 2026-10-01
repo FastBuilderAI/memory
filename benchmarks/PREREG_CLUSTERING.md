@@ -152,3 +152,11 @@ changed in response to its quality numbers; only these two bugs were fixed:
    links, the networkx `Graph`. FastMemory takes an edge list and builds its graph inside the call, so **N and B are
    timed with their graph construction included**. That is conservative against N and B, and is stated with the
    results. `_meta.json` now records the library versions.
+
+## Clarification 4 (2026-10-01, before the benchmark run): end-to-end timing as a secondary speed measure
+
+The primary speed measure stays as pre-registered (Clarification 3: the clustering call only), which includes graph
+construction for N and B but not for the other arms. So that a like-for-like speed number exists, every run also
+records an **end-to-end** time (`e2e_wall_s`, `e2e_cpu_s`): from the same shuffled integer edge list to the
+partition, including each library's own input conversion and graph construction. Any speed claim quotes the
+end-to-end ratio, or both ratios, and says which one it is.

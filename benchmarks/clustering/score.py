@@ -79,6 +79,8 @@ def score(WORK, ARMS, NS, MUS, SEEDS, RUNS):
             r = {"nmi_mean": statistics.mean(nmi), "nmi_runs": nmi, "ari_mean": statistics.mean(ari),
                  "q_run0": _modularity(edges, parts[0]), "stability": stab,
                  "wall_s_median": statistics.median(x["wall_s"] for x in runs), "cpu_s_median": statistics.median(x["cpu_s"] for x in runs),
+                 "e2e_wall_s_median": statistics.median(x.get("e2e_wall_s", float("nan")) for x in runs),
+                 "e2e_cpu_s_median": statistics.median(x.get("e2e_cpu_s", float("nan")) for x in runs),
                  "loadavg_1m_median": statistics.median(x.get("loadavg_1m", float("nan")) for x in runs),
                  "peak_rss_mb": doc.get("peak_rss_mb"), "boot_id": doc.get("boot_id")}
             if cover is not None:
