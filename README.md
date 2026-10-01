@@ -250,8 +250,9 @@ m = fastmemory.SearchMemory([("Travel over $500 must be approved by a manager.",
 hits = json.loads(m.search("who aproves travel", 5))   # typo-tolerant: "aproves" still matches
 ```
 
-Plain prose is split into passages, and `## [ID: x]` ATF sections are detected. Each result reports how it matched
-(exact, stem or fuzzy), so an agent can tell a confident match from a guess. In Rust: `search::Memory::from_documents`
+Plain prose is split into passages, and `## [ID: x]` ATF sections are detected. Each search reports how it matched
+(`stage`: exact, substring, stem, fuzzy or hub, plus any spelling `corrections`), its `term_coverage` and `confidence`, and
+a `handoff` flag, so an agent can tell a confident match from a guess. In Rust: `search::Memory::from_documents`
 and `Memory::search`.
 
 ## 🧩 Clustering backend and embedding FastMemory
