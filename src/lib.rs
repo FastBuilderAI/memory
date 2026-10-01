@@ -405,6 +405,24 @@ impl PySearchMemory {
     }
 }
 
+/// Node -> community for an edge list, from the clustering backend in use (the native engine if configured, else
+/// the built-in Louvain). Returns a JSON object string. No telemetry.
+#[cfg(feature = "python")]
+#[pyfunction]
+#[pyo3(name = "cluster_partition")]
+fn py_cluster_partition(py: Python, edges: Vec<(String, String)>) -> PyResult<String> {
+    let part = py.detach(|| cluster::partition(&edges));
+    Ok(serde_json::to_string(&part).unwrap_or_else(|_| "{}".to_string()))
+}
+
+/// Which clustering backend is in use, and why when it is the built-in one (JSON string).
+#[cfg(feature = "python")]
+#[pyfunction]
+#[pyo3(name = "clustering_status")]
+fn py_clustering_status() -> PyResult<String> {
+    Ok(louvain_backend::status().to_string())
+}
+
 #[cfg(feature = "python")]
 #[pymodule]
 fn fastmemory(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -415,6 +433,8 @@ fn fastmemory(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_worker_count, m)?)?;
     m.add_function(wrap_pyfunction!(search_documents, m)?)?;
     m.add_class::<PySearchMemory>()?;
+    m.add_function(wrap_pyfunction!(py_cluster_partition, m)?)?;
+    m.add_function(wrap_pyfunction!(py_clustering_status, m)?)?;
     Ok(())
 }
 
