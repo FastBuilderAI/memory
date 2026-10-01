@@ -160,3 +160,17 @@ construction for N and B but not for the other arms. So that a like-for-like spe
 records an **end-to-end** time (`e2e_wall_s`, `e2e_cpu_s`): from the same shuffled integer edge list to the
 partition, including each library's own input conversion and graph construction. Any speed claim quotes the
 end-to-end ratio, or both ratios, and says which one it is.
+
+## Clarification 5 (2026-10-01, during the run; labelling only): the LFR source is the authors' code
+
+The harness takes the LFR code from `github.com/skojaku/LFR-benchmark` @ `b5a7a6a19df1`, a third-party
+repackaging. To confirm that it is the authors' code, its `src/` was compared with the authors' own distribution:
+`binary_networks.tar.gz` from Andrea Lancichinetti's site, retrieved through the Internet Archive (snapshot
+2020-10-12, `web.archive.org/web/20201012090742id_/https://sites.google.com/site/andrealancichinetti/files/binary_networks.tar.gz`;
+tarball SHA-256 `7dc98b0d7e4ab75f318c533dcf40f6a7d07127da9e3f33733fc5d6c7e0b12e9b`).
+
+**All nine source files are byte-identical** to the mirror's, before the Clarification 1 patch: `benchm.cpp`,
+`cast.cpp`, `cc.cpp`, `combinatorics.cpp`, `histograms.cpp`, `print.cpp`, `random.cpp`, `set_parameters.cpp`,
+`standard_include.cpp`. The mirror's `src/` has no other files. So the generator is the original Lancichinetti–Fortunato
+undirected, unweighted LFR code, with the four `return 0;` lines of Clarification 1 added. Results name it that way, with
+both sources. No graph or arm changes.
