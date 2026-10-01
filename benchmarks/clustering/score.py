@@ -70,7 +70,7 @@ def score(WORK, ARMS, NS, MUS, SEEDS, RUNS):
             f = os.path.join(WORK, "runs", a, name.replace("/", "__") + ".json")
             if not os.path.exists(f):
                 continue
-            runs = json.load(open(f))["runs"]
+            doc = json.load(open(f)); runs = doc["runs"]
             parts = [{int(k): v for k, v in r["partition"].items()} for r in runs]
             nmi, ari = zip(*[_nmi_ari(truth, p) for p in parts])
             nodes = sorted(parts[0])
@@ -78,7 +78,9 @@ def score(WORK, ARMS, NS, MUS, SEEDS, RUNS):
                                    for p, q in itertools.combinations(parts, 2))
             r = {"nmi_mean": statistics.mean(nmi), "nmi_runs": nmi, "ari_mean": statistics.mean(ari),
                  "q_run0": _modularity(edges, parts[0]), "stability": stab,
-                 "wall_s_median": statistics.median(x["wall_s"] for x in runs), "cpu_s_median": statistics.median(x["cpu_s"] for x in runs)}
+                 "wall_s_median": statistics.median(x["wall_s"] for x in runs), "cpu_s_median": statistics.median(x["cpu_s"] for x in runs),
+                 "loadavg_1m_median": statistics.median(x.get("loadavg_1m", float("nan")) for x in runs),
+                 "peak_rss_mb": doc.get("peak_rss_mb"), "boot_id": doc.get("boot_id")}
             if cover is not None:
                 try:
                     from cdlib import NodeClustering, evaluation
@@ -113,5 +115,9 @@ def score(WORK, ARMS, NS, MUS, SEEDS, RUNS):
             verdict = "beat" if (pa < 0.05 and mx > my) else "loss" if (pa < 0.05 and mx < my) else "tie"
             res["lfr_cells"].setdefault(cell, {})["N_vs_" + other] = {"nmi_N": mx, "nmi_other": my, "graphs": k, "p": p,
                                                                      "p_holm": pa, "verdict": verdict}
+    man = os.path.join(WORK, "manifest.json")
+    res["lfr_checks"] = {k: v.get("check") for k, v in json.load(open(man))["lfr"].items()} if os.path.exists(man) else None
+    il = os.path.join(WORK, "runs", "_interruptions.jsonl")
+    res["interruptions"] = [json.loads(l) for l in open(il)] if os.path.exists(il) else []
     json.dump(res, open(os.path.join(WORK, "results.json"), "w"), indent=1, default=str)
     print("SCORED", os.path.join(WORK, "results.json"))

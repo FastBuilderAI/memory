@@ -115,3 +115,25 @@ Each graph gets 5 runs per arm, with the node order shuffled by `random.Random(r
   byte-identical `network.dat` and `community.dat`. The one graph written by the earlier unpatched -O3 attempt
   differs (written by code with undefined behaviour) and is deleted; no arm saw it.
 - **Speed records** add the 1-minute load average per run. Nothing else changes.
+
+## Clarification 2 (2026-10-01, before any graph is used and before any arm runs): the reviewer's conditions
+
+1. **Crashes and reboots.** The Ubuntu machine has failed under sustained load before. Each (graph, arm) runs in its
+   own process and writes one file per graph atomically once its 5 runs finish. The file records the boot id at its
+   start and end, the 1-minute load average per run and the process's peak RSS. A graph counts as done only when
+   every arm's file exists with one boot id. A graph found partly done, or crossed by a reboot, is logged in
+   `runs/_interruptions.jsonl`, and all its arms are re-run in full (never partially). The log is reported with the
+   results.
+2. **Background load.** The arms are interleaved per graph (`run.py runall`), in an order rotated by the graph's
+   index, so background load hits every arm alike. The median 1-minute load average is reported next to each timing.
+3. **The LFR fix is neutral, checked on more graphs before gen.** Patched -O3 and unpatched -O0 write byte-identical
+   `network.dat` + `community.dat` on n = 1,000 at each of the six μ (seed 1) and on n = 10,000, μ = 0.3. Both
+   unpatched -O0 binaries die with SIGILL at exit, after writing. The four functions' return values are unused:
+   `int_histogram` is called only as a statement (`benchm.cpp` lines 1643 and 1648), and `cherr` is never called.
+   So `return 0;` is not a semantic choice.
+4. **Graph validation.** For every LFR graph, `gen` records against the targets: the realised μ (the mean over nodes
+   of external degree / degree); mean, min and max degree; node count; community count; and min and max community
+   size. These are reported with the results.
+5. **Engine provenance.** Next to the engine binary, a `.build.json` records the private source commit and the SHA-256
+   of its uncommitted diff (the quiet flag), the build command and compiler, and the binary's SHA-256. `_meta.json`
+   for arm N copies it. The source itself is not part of this benchmark.

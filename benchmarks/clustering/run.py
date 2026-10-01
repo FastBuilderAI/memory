@@ -51,6 +51,26 @@ def _patch_missing_returns(src):
     return out
 
 
+def _lfr_check(d, n, mu):
+    """Clarification 2: the realised graph against the LFR targets (k = 20, maxk = 50, minc = 10, maxc = 50).
+    Realised mu = mean over nodes of (edges leaving the node's community / degree), LFR's own definition."""
+    com = {}
+    for l in open(os.path.join(d, "community.dat")):
+        a, b = l.split()[:2]; com[int(a)] = int(b)
+    deg, ext = {}, {}
+    for l in open(os.path.join(d, "network.dat")):  # each undirected edge is listed from both ends
+        a, b = map(int, l.split()[:2])
+        deg[a] = deg.get(a, 0) + 1
+        ext[a] = ext.get(a, 0) + (com[a] != com[b])
+    sizes = {}
+    for c in com.values():
+        sizes[c] = sizes.get(c, 0) + 1
+    return {"target": {"n": n, "mu": mu, "k": 20, "maxk": 50, "minc": 10, "maxc": 50},
+            "nodes": len(com), "nodes_with_edges": len(deg), "mu_realised": round(sum(ext[v] / deg[v] for v in deg) / len(deg), 4),
+            "mean_degree": round(sum(deg.values()) / len(deg), 3), "max_degree": max(deg.values()), "min_degree": min(deg.values()),
+            "communities": len(sizes), "min_community": min(sizes.values()), "max_community": max(sizes.values())}
+
+
 def gen():
     os.makedirs(WORK, exist_ok=True)
     src = os.path.join(WORK, "lfr-src")
@@ -84,7 +104,8 @@ def gen():
                     json.dump({"seed_used": seed, "failures": tries}, open(os.path.join(d, "gen.json"), "w"))
                 man["lfr"][os.path.basename(d)] = {"network": sha(os.path.join(d, "network.dat")),
                                                    "community": sha(os.path.join(d, "community.dat")),
-                                                   **json.load(open(os.path.join(d, "gen.json")))}
+                                                   **json.load(open(os.path.join(d, "gen.json"))),
+                                                   "check": _lfr_check(d, n, mu)}
                 print("lfr", os.path.basename(d), flush=True)
     for k, name in SNAP.items():
         d = os.path.join(WORK, "snap"); os.makedirs(d, exist_ok=True)
@@ -158,8 +179,14 @@ def cluster(arm, edges, run):
     return {inv[i]: c for i, c in lab.items()}
 
 
-def run_arm(arm):
-    out = os.path.join(WORK, "runs", arm); os.makedirs(out, exist_ok=True)
+def _boot_id():
+    try:
+        return open("/proc/sys/kernel/random/boot_id").read().strip()
+    except OSError:  # macOS: boot time stands in for a boot id
+        return subprocess.run(["sysctl", "-n", "kern.boottime"], capture_output=True, text=True).stdout.strip()
+
+
+def _arm_meta(arm):
     meta = {"arm": arm, "python": sys.version.split()[0], "platform": platform.platform(), "threads_env": {
         k: os.environ.get(k) for k in ("OMP_NUM_THREADS", "RAYON_NUM_THREADS", "OPENBLAS_NUM_THREADS")}}
     if arm in ("N", "B"):
@@ -169,10 +196,28 @@ def run_arm(arm):
         assert (arm == "N") == (st["backend"] == "native"), "arm %s ran with backend %s" % (arm, st)
         if st.get("path"):
             meta["engine_sha256"] = sha(st["path"])
+            b = st["path"] + ".build.json"  # where the binary came from (source commit, no source)
+            meta["engine_build"] = json.load(open(b)) if os.path.exists(b) else None
+    return meta
+
+
+def _arm_file(arm, name):
+    return os.path.join(WORK, "runs", arm, name.replace("/", "__") + ".json")
+
+
+def run_arm(arm, only=None):
+    """One arm on every graph (or on graph `only`), 5 shuffled-order runs per graph; one file per graph, written
+    atomically once its 5 runs finish, with the boot id, the 1-minute load average per run and the process's peak RSS."""
+    out = os.path.join(WORK, "runs", arm); os.makedirs(out, exist_ok=True)
+    meta = _arm_meta(arm)
+    json.dump(meta, open(os.path.join(out, "_meta.json"), "w"), indent=1)
     for name, path in graphs():
-        f = os.path.join(out, name.replace("/", "__") + ".json")
+        if only is not None and name != only:
+            continue
+        f = _arm_file(arm, name)
         if os.path.exists(f):
             continue
+        boot = _boot_id()
         edges = load_edges(path)
         rec = []
         for r in range(RUNS):
@@ -180,21 +225,67 @@ def run_arm(arm):
             part = cluster(arm, edges, r)
             rec.append({"run": r, "wall_s": time.perf_counter() - w0, "cpu_s": time.process_time() - c0,
                         "loadavg_1m": os.getloadavg()[0], "partition": part})
-        json.dump({"graph": name, "runs": rec}, open(f, "w"))
+        rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1 << 20 if platform.system() == "Darwin" else 1 << 10)
+        json.dump({"graph": name, "boot_id": boot, "boot_id_end": _boot_id(), "peak_rss_mb": rss, "runs": rec},
+                  open(f + ".tmp", "w"))
+        os.replace(f + ".tmp", f)
         print(arm, name, round(sum(x["wall_s"] for x in rec) / RUNS, 3), flush=True)
-    meta["peak_rss_mb"] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1 << 20 if platform.system() == "Darwin" else 1 << 10)
-    json.dump(meta, open(os.path.join(out, "_meta.json"), "w"), indent=1)
+
+
+def run_all(arms):
+    """PREREG_CLUSTERING clarification 2: arms interleaved per graph, in an order rotated by the graph's index, each
+    (graph, arm) in its own process. A graph counts as done only when every arm's file exists with one boot id; a graph
+    found partly done (a crash or reboot mid-graph) is logged and all its arms are re-run in full."""
+    done_dir = os.path.join(WORK, "runs", "_done"); os.makedirs(done_dir, exist_ok=True)
+    log = os.path.join(WORK, "runs", "_interruptions.jsonl")
+    native = os.environ.get("FASTMEMORY_NATIVE_LIB")
+    for gi, (name, _) in enumerate(graphs()):
+        marker = os.path.join(done_dir, name.replace("/", "__") + ".json")
+        if os.path.exists(marker):
+            continue
+        present = [a for a in arms if os.path.exists(_arm_file(a, name))]
+        if present:
+            with open(log, "a") as fh:
+                fh.write(json.dumps({"graph": name, "found_arms": present, "boot_id_now": _boot_id(),
+                                     "boot_ids_found": sorted({json.load(open(_arm_file(a, name)))["boot_id"] for a in present}),
+                                     "time": time.strftime("%Y-%m-%d %H:%M:%S"), "action": "re-run all arms"}) + "\n")
+            for a in present:
+                os.remove(_arm_file(a, name))
+        order = arms[gi % len(arms):] + arms[:gi % len(arms)]
+        for a in order:
+            env = dict(os.environ)
+            env.pop("FASTMEMORY_NATIVE_LIB", None); env.pop("FASTMEMORY_CLUSTER", None)
+            if a == "N":
+                assert native, "arm N needs FASTMEMORY_NATIVE_LIB"
+                env["FASTMEMORY_NATIVE_LIB"] = native
+            elif a == "B":
+                env["FASTMEMORY_CLUSTER"] = "builtin"
+            subprocess.check_call([sys.executable, os.path.abspath(__file__), "run", "--arm", a, "--graph", name], env=env)
+        boots = {json.load(open(_arm_file(a, name)))["boot_id"] for a in arms} | {json.load(open(_arm_file(a, name)))["boot_id_end"] for a in arms}
+        if len(boots) != 1:  # a reboot inside this graph's arms: re-run it on the next pass
+            with open(log, "a") as fh:
+                fh.write(json.dumps({"graph": name, "boot_ids": sorted(boots), "time": time.strftime("%Y-%m-%d %H:%M:%S"),
+                                     "action": "boot id changed within the graph; re-run all arms"}) + "\n")
+            for a in arms:
+                os.remove(_arm_file(a, name))
+            continue
+        json.dump({"graph": name, "order": order, "boot_id": boots.pop(), "time": time.strftime("%Y-%m-%d %H:%M:%S")},
+                  open(marker, "w"))
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("phase", choices=["gen", "run", "score"])
+    ap.add_argument("phase", choices=["gen", "run", "runall", "score"])
     ap.add_argument("--arm", choices=ARMS)
+    ap.add_argument("--graph", default=None, help="run: only this graph (e.g. lfr/n1000_mu0.1_s1)")
+    ap.add_argument("--arms", default=",".join(ARMS), help="runall: the arms, comma-separated")
     a = ap.parse_args()
     if a.phase == "gen":
         gen()
     elif a.phase == "run":
-        run_arm(a.arm)
+        run_arm(a.arm, a.graph)
+    elif a.phase == "runall":
+        run_all(a.arms.split(","))
     else:
         from score import score
         score(WORK, ARMS, NS, MUS, SEEDS, RUNS)
