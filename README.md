@@ -15,7 +15,8 @@ Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the ga
   until they can be reproduced the same way.
 - **Passage search (new in 0.4.10), SQuAD v1.1 validation (seed 0), recall@5 against a standard BM25:** FastMemory's
   search is lexical only: words, stems and typo-tolerant word matching, with no embeddings. It wins when queries are
-  misspelled and loses slightly on clean questions and on short keyword queries. BM25 here is `rank_bm25`'s Okapi
+  misspelled, ties or loses slightly on clean questions (a loss at 2,000 paragraphs), and loses on short keyword
+  queries. BM25 here is `rank_bm25`'s Okapi
   over the same passages.
 
   | Query style | 300 paragraphs, 600 questions: FastMemory / BM25 | 2,000 paragraphs and questions: FastMemory / BM25 |
@@ -27,7 +28,7 @@ Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the ga
   | Misspelled keywords | **0.658 / 0.052** (win) | **0.499 / 0.015** (win) |
 
   Win and loss: exact paired McNemar test, p < 0.05 (every labelled cell has p < 0.01). Unlabelled cells show no
-  significant difference (p ≥ 0.07).
+  significant difference (p ≥ 0.07). Rates are exact counts rounded half up to three decimals, as in MahaBodi's BENCHMARKS.md.
   Median query time on an Apple M2 Pro: 0.05 ms (300 paragraphs) and 0.15 ms (2,000), or 0.5–1.7 ms for misspelled
   keywords. The harness and per-question results are public in the
   [MahaBodi repository](https://github.com/mahabodi/mahabodi) (`research/bench_retrieval_fastmemory.py`).
@@ -35,7 +36,8 @@ Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the ga
 - **Clustering benchmark:** pre-registered in [`benchmarks/PREREG_CLUSTERING.md`](benchmarks/PREREG_CLUSTERING.md)
   (LFR and SNAP graphs, against Leiden, Infomap and Louvain), running now. Results will be published here, losses
   included.
-- **Production example (measured 2026-09-29):** a live FastStudio deployment serving PubChem:
+- **Production example (measured on the live deployment, 2026-09-29):** a FastStudio deployment serving PubChem.
+  The deployment is private, so these numbers can't be independently reproduced:
 
   | Measured | Value |
   | :--- | :--- |
@@ -251,7 +253,7 @@ hits = json.loads(m.search("who aproves travel", 5))   # typo-tolerant: "aproves
 ```
 
 Plain prose is split into passages, and `## [ID: x]` ATF sections are detected. Each search reports how it matched
-(`stage`: exact, substring, stem, fuzzy or hub, plus any spelling `corrections`), its `term_coverage` and `confidence`, and
+(`stage`: exact, substring, stem, fuzzy, hub, or empty for an empty memory, plus any spelling `corrections`), its `term_coverage` and `confidence`, and
 a `handoff` flag, so an agent can tell a confident match from a guess. In Rust: `search::Memory::from_documents`
 and `Memory::search`.
 
