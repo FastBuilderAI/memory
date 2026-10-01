@@ -94,3 +94,24 @@ Each graph gets 5 runs per arm, with the node order shuffled by `random.Random(r
 - **Recomputation:** per-run partitions are saved, and the reviewing agent recomputes every metric before anything is
   published.
 - **Losses** are reported as losses, here and on any site or pitch.
+
+## Clarification 1 (2026-10-01, before any graph is used and before any arm runs): machine and LFR compile fix
+
+- **Machine.** The benchmark runs on the user's Ubuntu machine (x86_64, 20 logical CPUs, 61 GB, Ubuntu with GCC
+  15.2), not the Mac mini. Reason: the user's decision that the engine binary stays on the user's own machines, and
+  the Mac mini is busy with another pre-registered run. Every arm runs on this machine, so the speed comparison stays
+  within one machine. The engine is a Linux x86_64 build of the same engine version (`ffi` feature, no parallel
+  feature), built on this machine and used only as a compiled library; its SHA-256 is recorded in `_meta.json`.
+- **"Nothing else running" can't be guaranteed** on this machine (another project's single-threaded job may run on
+  one core). Every run records the 1-minute load average, and the results state it. With 20 logical CPUs and
+  single-threaded arms, contention is expected to be small, but it isn't claimed to be zero.
+- **LFR compile fix.** Four `int` functions in the authors' code (`print.cpp` lines 12 and 21, `histograms.cpp` lines
+  643 and 672) end without a `return`. With GCC 15 this undefined behaviour makes the generator crash with SIGILL at
+  the end of every run (-O0), or loop forever after writing its files (-O3), so the harness's retry rule would have
+  replaced every seed. `gen` therefore adds `return 0;` at exactly those four closing braces before compiling (the
+  return values are never used), and records each file's SHA-256 before and after, plus the compiler version.
+- **Check that the fix doesn't change the graphs:** on n = 1,000, μ = 0.1, seed 1, the patched code at -O3 and at
+  -O0 (two runs each) and the unpatched code at -O0 (whose files are complete before it crashes) all write
+  byte-identical `network.dat` and `community.dat`. The one graph written by the earlier unpatched -O3 attempt
+  differs (written by code with undefined behaviour) and is deleted; no arm saw it.
+- **Speed records** add the 1-minute load average per run. Nothing else changes.

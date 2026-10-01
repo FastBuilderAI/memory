@@ -30,17 +30,41 @@ def sha(p):
     return h.hexdigest()
 
 
+# PREREG_CLUSTERING clarification 1: four int functions in the authors' code end without a return. Current GCC turns
+# that into a trap (SIGILL at -O0) or an endless loop (-O3), so `return 0;` is added at exactly these closing braces.
+# The return values are never used; the patched code writes byte-identical graphs to the unpatched code (checked).
+MISSING_RETURNS = (("print.cpp", 12), ("print.cpp", 21), ("histograms.cpp", 643), ("histograms.cpp", 672))
+
+
+def _patch_missing_returns(src):
+    out = {}
+    for f, line in MISSING_RETURNS:
+        p = os.path.join(src, "src", f)
+        before = sha(p)
+        lines = open(p).read().split("\n")
+        if lines[line - 1] == "}":
+            lines[line - 1] = "return 0; }"
+            open(p, "w").write("\n".join(lines))
+        elif lines[line - 1] != "return 0; }":
+            raise RuntimeError("unexpected line %s:%d: %r" % (f, line, lines[line - 1]))
+        out["%s:%d" % (f, line)] = {"before": before, "after": sha(p)}
+    return out
+
+
 def gen():
     os.makedirs(WORK, exist_ok=True)
     src = os.path.join(WORK, "lfr-src")
     if not os.path.isdir(src):
         subprocess.check_call(["git", "clone", "-q", LFR_REPO, src])
         subprocess.check_call(["git", "-C", src, "checkout", "-q", LFR_COMMIT])
+    patch = _patch_missing_returns(src)
     binp = os.path.join(src, "benchmark")
     if not os.path.exists(binp):
         subprocess.check_call(["g++", "-O3", "-o", binp, os.path.join(src, "src", "benchm.cpp")])
     man = {"lfr_source": {"repo": LFR_REPO, "commit": LFR_COMMIT, "benchm.cpp": sha(os.path.join(src, "src", "benchm.cpp")),
-                          "binary": sha(binp)}, "lfr": {}, "snap": {}}
+                          "binary": sha(binp), "compiler": subprocess.run(["g++", "--version"], capture_output=True,
+                                                                         text=True).stdout.splitlines()[0],
+                          "missing_return_patch": patch}, "lfr": {}, "snap": {}}
     for n in NS:
         for mu in MUS:
             for s in SEEDS:
@@ -154,7 +178,8 @@ def run_arm(arm):
         for r in range(RUNS):
             w0, c0 = time.perf_counter(), time.process_time()
             part = cluster(arm, edges, r)
-            rec.append({"run": r, "wall_s": time.perf_counter() - w0, "cpu_s": time.process_time() - c0, "partition": part})
+            rec.append({"run": r, "wall_s": time.perf_counter() - w0, "cpu_s": time.process_time() - c0,
+                        "loadavg_1m": os.getloadavg()[0], "partition": part})
         json.dump({"graph": name, "runs": rec}, open(f, "w"))
         print(arm, name, round(sum(x["wall_s"] for x in rec) / RUNS, 3), flush=True)
     meta["peak_rss_mb"] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1 << 20 if platform.system() == "Darwin" else 1 << 10)
