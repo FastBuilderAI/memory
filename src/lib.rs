@@ -11,6 +11,14 @@ pub mod cluster;
 pub mod louvain_backend;
 #[cfg(feature = "telemetry")]
 pub mod telemetry;
+// Passage search over plain documents (ported from MahaBodi, MIT): no network, no async.
+pub mod text;
+pub mod graph;
+pub mod index;
+pub mod ingest;
+pub mod search;
+
+pub use search::{Memory, SearchHit, SearchResult, Stage};
 
 #[cfg(feature = "python")]
 #[pyfunction]
@@ -346,6 +354,57 @@ fn get_worker_count() -> PyResult<usize> {
         }))
 }
 
+/// Search `(text, source)` documents for `query`; returns a `SearchResult` as a JSON string.
+///
+/// Builds the memory on every call: to run several queries over the same documents, use `SearchMemory`.
+#[cfg(feature = "python")]
+#[pyfunction(name = "search")]
+#[pyo3(signature = (documents, query, k=5))]
+fn search_documents(py: Python, documents: Vec<(String, String)>, query: String, k: usize) -> PyResult<String> {
+    let r = py.detach(|| search::Memory::from_documents(&documents).search(&query, k));
+    serde_json::to_string(&r).map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))
+}
+
+/// A searchable memory over plain documents, built once and queried many times.
+///
+///   m = SearchMemory([("Travel must be approved.", "policy")])
+///   json.loads(m.search("who approves travel", 5))
+#[cfg(feature = "python")]
+#[pyclass(name = "SearchMemory")]
+struct PySearchMemory {
+    inner: search::Memory,
+}
+
+#[cfg(feature = "python")]
+#[pymethods]
+impl PySearchMemory {
+    #[new]
+    #[pyo3(signature = (documents=None))]
+    fn new(py: Python, documents: Option<Vec<(String, String)>>) -> Self {
+        let docs = documents.unwrap_or_default();
+        let inner = py.detach(|| search::Memory::from_documents(&docs));
+        PySearchMemory { inner }
+    }
+
+    /// Add `(text, source)` documents (plain prose, or `## [ID: x]` ATF sections), then rebuild once.
+    fn add_documents(&mut self, py: Python, documents: Vec<(String, String)>) {
+        let inner = &mut self.inner;
+        py.detach(|| inner.add_documents(&documents));
+    }
+
+    /// Top `k` passages for `query`, as a JSON `SearchResult` string.
+    #[pyo3(signature = (query, k=5))]
+    fn search(&self, py: Python, query: String, k: usize) -> PyResult<String> {
+        let inner = &self.inner;
+        let r = py.detach(|| inner.search(&query, k));
+        serde_json::to_string(&r).map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))
+    }
+
+    fn __len__(&self) -> usize {
+        self.inner.len()
+    }
+}
+
 #[cfg(feature = "python")]
 #[pymodule]
 fn fastmemory(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -354,6 +413,8 @@ fn fastmemory(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(louvain_cluster, m)?)?;
     m.add_function(wrap_pyfunction!(get_nltk_extract_code, m)?)?;
     m.add_function(wrap_pyfunction!(get_worker_count, m)?)?;
+    m.add_function(wrap_pyfunction!(search_documents, m)?)?;
+    m.add_class::<PySearchMemory>()?;
     Ok(())
 }
 
