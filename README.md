@@ -249,8 +249,13 @@ import json, fastmemory
 
 m = fastmemory.SearchMemory([("Travel over $500 must be approved by a manager.", "policy.md"),
                              ("Expense reports are due within 30 days.", "policy.md")])
-hits = json.loads(m.search("who aproves travel", 5))   # typo-tolerant: "aproves" still matches
+r = json.loads(m.search("manger aproved", 5))
+# r["stage"] == "fuzzy"; r["corrections"] == [["manger", "manager", 0.44], ["aproved", "approved", 0.67]]
+# r["hits"][0]["text"] starts "Travel over $500 must be approved by a manager."
 ```
+
+The fuzzy stage runs only when no word matches exactly or by stem. Very short or heavily misspelled words (e.g.
+"trvel") may not be corrected; then the result says so (`matched: false`, `handoff: true`) instead of guessing.
 
 Plain prose is split into passages, and `## [ID: x]` ATF sections are detected. Each search reports how it matched
 (`stage`: exact, substring, stem, fuzzy, hub, or empty for an empty memory, plus any spelling `corrections`), its `term_coverage` and `confidence`, and
