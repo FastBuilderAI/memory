@@ -21,12 +21,13 @@ impl LicenseTelemetry {
     pub fn ping() -> Option<std::thread::JoinHandle<()>> {
         let _ = dotenv::dotenv();
 
+        // Opt-in only: nothing is sent unless a license key is configured (license verification) or the user
+        // explicitly enables telemetry with FASTMEMORY_TELEMETRY=1. Community use sends nothing.
+        let opted_in = env::var("FASTMEMORY_TELEMETRY").map_or(false, |v| v == "1" || v.eq_ignore_ascii_case("true"));
         let license_key = match env::var("FASTMEMORY_LICENSE_KEY") {
             Ok(key) if !key.trim().is_empty() => key.trim().to_string(),
-            _ => {
-                eprintln!("\x1b[33mWARN: No FastMemory License found (FASTMEMORY_LICENSE_KEY is missing). Operating in community mode.\x1b[0m");
-                "community_edition".to_string()
-            }
+            _ if opted_in => "community_edition".to_string(),
+            _ => return None,
         };
 
         let mut sys = System::new();

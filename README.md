@@ -2,40 +2,34 @@
 
 ![FastBuilder Benchmarks](banner.png)
 
-[![🏆 SOTA on 13 Benchmarks](https://img.shields.io/badge/HuggingFace-SOTA%20on%2013%20Benchmarks-blue?logo=huggingface)](https://huggingface.co/fastbuilderai/FastMemory)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **Topology** (Component, Block, Function, Data, Access, Event) taxonomy.
 
 Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the gap between shallow vector retrieval (RAG) and deterministic computational memory.
 
-## 🏆 State-of-the-Art (SOTA) Performance
+## 📊 Benchmarks and measured numbers
 
-FastMemory has officially achieved **SOTA status on 13 distinct benchmarks** (including FinanceBench, FRAMES, LongBench, GraphRAG-Bench, and HaluEval), comprehensively outperforming standard vector RAG architectures in massive multi-hop reasoning, logic extraction, and deterministic pathfinding. 
+- **Benchmarks:** FastMemory's results are being re-run with a public, reproducible harness, with fixed samples, CIs
+  and losses reported as losses. Results appear here as they are verified. Earlier summary claims were withdrawn
+  until they can be reproduced the same way.
+- **Production example (measured 2026-09-29):** a live FastStudio deployment serving PubChem:
 
-Explore the full benchmark matrix and transparent execution traces on our official [Hugging Face Model Card](https://huggingface.co/fastbuilderai/FastMemory).
+  | Measured | Value |
+  | :--- | :--- |
+  | Compounds | 444,789 (PubChem CID 1–500,000, one of PubChem's 359 SDF files; 339 MB gzipped) |
+  | Stored per compound | about 258 characters of selected fields (name, formula, weight, H-bond counts, LogP, rotatable bonds, complexity) plus its topology |
+  | Storage | 0.79 GB of rows plus a 0.12 GB full-text index, in PostgreSQL |
+  | Service process memory | 78–89 MB resident; the data lives in the database, not in the process |
+  | Embeddings | none |
 
-### 📊 Production Memory Efficiency (Verified)
-
-These numbers are from our live production instance serving **445,289 PubChem compounds**:
-
-| Metric | Vector Index (TurboVec) | FastMemory (Production) |
-| :--- | :---: | :---: |
-| **Source data** | 31 GB (10M float32 vectors) | **40 GB** (PubChem Compounds) |
-| **Stored size** | ~4 GB (4-bit quantized) | **1.15 GB** (topology DB) |
-| **Compression ratio** | 8x | **35x** |
-| **Runtime RAM** | ~4 GB (index must live in RAM) | **129 MiB** (full backend) |
-| **Structure preserved** | ❌ Approximate similarity only | ✅ Full CBFDAE topology |
-| **Multi-hop reasoning** | ❌ No | ✅ Wormhole traversal |
-| **Anti-hallucination** | ❌ No | ✅ Fabrication scrubber |
-
-> **35x compression. 129 MiB to serve 445K compounds. Full structural fidelity — no information lost, information gained.**
+  This is a selective, structured summary of each compound, not lossless compression of PubChem.
 
 ---
 
 ## ⚡ Quickstart: Try the RAG-Replacement
 - **[Run the FastMemory Demonstration Notebook](fastmemory_demo.ipynb)**: Basic Topology Architecture.
-- **[Run the FinanceBench SOTA Notebook](fastmemory_financebench_sota.ipynb)**: Advanced multi-hop financial reasoning.
+- **[Run the FinanceBench Notebook](fastmemory_financebench_sota.ipynb)**: Advanced multi-hop financial reasoning.
 
 ---
 
@@ -220,7 +214,7 @@ Data access within FastMemory is rigorously secured at the graph layer. Utilizin
 For a hands-on technical demonstration of how FastMemory replaces Vector RAG with deterministic Topology grounding, explore our interactive Jupyter Notebooks:
 
 - **[Basic Global Topology Notebook](fastmemory_demo.ipynb)**: Learn the core LangChain grounding loop and ATF extraction.
-- **[FinanceBench SOTA Notebook](fastmemory_financebench_sota.ipynb)**: Advanced demonstration of multi-hop financial reasoning using the Boeing 10-K dataset.
+- **[FinanceBench Notebook](fastmemory_financebench_sota.ipynb)**: Advanced demonstration of multi-hop financial reasoning using the Boeing 10-K dataset.
 
 ---
 
@@ -246,8 +240,10 @@ For a hands-on technical demonstration of how FastMemory replaces Vector RAG wit
   ```
 
   That leaves the parser, `cluster::partition` / `cluster::run_louvain` and the backend loader. It has no network
-  code and no async runtime. The default features keep the CLI, the server and the license check, which contacts
-  `api.fastbuilder.ai`.
+  code and no async runtime. The default features keep the CLI and the server.
+- **Telemetry is opt-in.** FastMemory sends nothing unless a license key is configured (`FASTMEMORY_LICENSE_KEY`, for
+  license verification) or you set `FASTMEMORY_TELEMETRY=1`. When enabled, the ping to `api.fastbuilder.ai` includes
+  the host name, CPU vendor and public IP.
 
 ## 🏗️ Architecture & Integration Patterns
 
