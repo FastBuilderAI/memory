@@ -138,8 +138,17 @@ def load_edges(path):
     return [(a, b) for a, b in e if a < b]  # LFR lists each undirected edge twice
 
 
+def _timed(fn):
+    w0, c0 = time.perf_counter(), time.process_time()
+    out = fn()
+    return out, time.perf_counter() - w0, time.process_time() - c0
+
+
 def cluster(arm, edges, run):
-    """-> {node: community}; node order shuffled by random.Random(run) before clustering."""
+    """-> ({node: community}, wall_s, cpu_s); node order shuffled by random.Random(run) before clustering.
+    Clarification 3: only the clustering call on the library's own prepared input is timed (imports, relabelling and
+    graph construction are not). FastMemory takes an edge list and builds its graph inside the call, so N and B are
+    timed with that construction included."""
     nodes = sorted({x for e in edges for x in e})
     perm = nodes[:]; random.Random(run).shuffle(perm)
     pos = {v: i for i, v in enumerate(perm)}           # relabel = shuffled order
@@ -147,36 +156,42 @@ def cluster(arm, edges, run):
     random.Random(run).shuffle(E)
     if arm in ("N", "B"):
         import fastmemory
-        part = json.loads(fastmemory.cluster_partition([(str(a), str(b)) for a, b in E]))
-        lab = {int(k): v for k, v in part.items()}
-    elif arm in ("LD", "LC", "LV", "IM"):
+        S = [(str(a), str(b)) for a, b in E]
+        raw, w, c = _timed(lambda: fastmemory.cluster_partition(S))
+        lab = {int(k): v for k, v in json.loads(raw).items()}
+    elif arm in ("LD", "LC", "LV"):
         import igraph as ig
         g = ig.Graph(n=len(nodes), edges=E)
         if arm == "LD":
             import leidenalg as la
-            mem = la.find_partition(g, la.ModularityVertexPartition, n_iterations=-1, seed=run).membership
+            mem, w, c = _timed(lambda: la.find_partition(g, la.ModularityVertexPartition, n_iterations=-1, seed=run).membership)
         elif arm == "LC":
             import leidenalg as la
             dens = 2 * g.ecount() / (g.vcount() * (g.vcount() - 1))
-            mem = la.find_partition(g, la.CPMVertexPartition, resolution_parameter=dens, n_iterations=-1, seed=run).membership
-        elif arm == "LV":
-            random.seed(run)
-            mem = g.community_multilevel().membership
+            mem, w, c = _timed(lambda: la.find_partition(g, la.CPMVertexPartition, resolution_parameter=dens, n_iterations=-1, seed=run).membership)
         else:
-            import infomap
-            im = infomap.Infomap("--two-level --silent --seed %d" % run)
-            for a, b in E:
-                im.add_link(a, b)
-            im.run()
-            m = im.get_modules()
-            mem = [m.get(i, -1 - i) for i in range(len(nodes))]
+            random.seed(run)
+            mem, w, c = _timed(lambda: g.community_multilevel().membership)
         lab = dict(enumerate(mem))
+    elif arm == "IM":
+        import infomap
+        im = infomap.Infomap("--two-level --silent --seed %d" % (run + 1))  # clarification 3: Infomap needs seed >= 1
+        for a, b in E:
+            im.add_link(a, b)
+        _, w, c = _timed(im.run)
+        m = im.get_modules()
+        lab = {i: m.get(i, -1 - i) for i in range(len(nodes))}
     elif arm == "NX":
         import networkx as nx
         G = nx.Graph(); G.add_nodes_from(range(len(nodes))); G.add_edges_from(E)
-        lab = {v: c for c, comm in enumerate(nx.community.louvain_communities(G, resolution=1.0, seed=run)) for v in comm}
+        comms, w, c = _timed(lambda: nx.community.louvain_communities(G, resolution=1.0, seed=run))
+        lab = {v: k for k, comm in enumerate(comms) for v in comm}
     inv = {i: v for v, i in pos.items()}
-    return {inv[i]: c for i, c in lab.items()}
+    return {inv[i]: c_ for i, c_ in lab.items()}, w, c
+
+
+_ARM_IMPORTS = {"N": ("fastmemory",), "B": ("fastmemory",), "LD": ("igraph", "leidenalg"), "LC": ("igraph", "leidenalg"),
+                "LV": ("igraph",), "IM": ("infomap",), "NX": ("networkx",)}
 
 
 def _boot_id():
@@ -210,6 +225,15 @@ def run_arm(arm, only=None):
     atomically once its 5 runs finish, with the boot id, the 1-minute load average per run and the process's peak RSS."""
     out = os.path.join(WORK, "runs", arm); os.makedirs(out, exist_ok=True)
     meta = _arm_meta(arm)
+    for mod in _ARM_IMPORTS[arm]:  # imported before any timing
+        __import__(mod)
+    meta["versions"] = {}
+    for pkg in ("fastmemory", "python-igraph", "igraph", "leidenalg", "infomap", "networkx"):
+        try:
+            import importlib.metadata as md
+            meta["versions"][pkg] = md.version(pkg)
+        except Exception:
+            pass
     json.dump(meta, open(os.path.join(out, "_meta.json"), "w"), indent=1)
     for name, path in graphs():
         if only is not None and name != only:
@@ -221,10 +245,8 @@ def run_arm(arm, only=None):
         edges = load_edges(path)
         rec = []
         for r in range(RUNS):
-            w0, c0 = time.perf_counter(), time.process_time()
-            part = cluster(arm, edges, r)
-            rec.append({"run": r, "wall_s": time.perf_counter() - w0, "cpu_s": time.process_time() - c0,
-                        "loadavg_1m": os.getloadavg()[0], "partition": part})
+            part, w, c = cluster(arm, edges, r)
+            rec.append({"run": r, "wall_s": w, "cpu_s": c, "loadavg_1m": os.getloadavg()[0], "partition": part})
         rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1 << 20 if platform.system() == "Darwin" else 1 << 10)
         json.dump({"graph": name, "boot_id": boot, "boot_id_end": _boot_id(), "peak_rss_mb": rss, "runs": rec},
                   open(f + ".tmp", "w"))

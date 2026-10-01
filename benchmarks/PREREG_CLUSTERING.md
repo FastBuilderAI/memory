@@ -137,3 +137,18 @@ Each graph gets 5 runs per arm, with the node order shuffled by `random.Random(r
 5. **Engine provenance.** Next to the engine binary, a `.build.json` records the private source commit and the SHA-256
    of its uncommitted diff (the quiet flag), the build command and compiler, and the binary's SHA-256. `_meta.json`
    for arm N copies it. The source itself is not part of this benchmark.
+
+## Clarification 3 (2026-10-01, after a smoke test, before the benchmark run): two harness bugs fixed
+
+A smoke test ran every arm on one benchmark graph (`lfr/n1000_mu0.3_s1`, 5 runs each) in a scratch directory, to
+check the harness end to end. Its outputs are discarded and are not part of the results. Nothing in any arm was
+changed in response to its quality numbers; only these two bugs were fixed:
+
+1. **Infomap seed.** Infomap rejects seed 0, so arm IM failed on run 0. IM now uses seed = run index + 1 (1–5), the
+   nearest valid reading of "seed = run index".
+2. **What is timed.** Imports and graph construction ran inside the timer, so each arm's first run also timed its
+   library import (Leiden's run 0: 0.93 s against a 0.43 s mean). Now each arm's libraries are imported before any
+   timing, and only the clustering call on the library's own prepared input is timed: the igraph `Graph`, Infomap's
+   links, the networkx `Graph`. FastMemory takes an edge list and builds its graph inside the call, so **N and B are
+   timed with their graph construction included**. That is conservative against N and B, and is stated with the
+   results. `_meta.json` now records the library versions.
