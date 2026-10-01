@@ -13,6 +13,28 @@ Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the ga
 - **Benchmarks:** FastMemory's results are being re-run with a public, reproducible harness, with fixed samples, CIs
   and losses reported as losses. Results appear here as they are verified. Earlier summary claims were withdrawn
   until they can be reproduced the same way.
+- **Passage search (new in 0.4.10), SQuAD v1.1 validation (seed 0), recall@5 against a standard BM25:** FastMemory's
+  search is lexical only: words, stems and typo-tolerant word matching, with no embeddings. It wins when queries are
+  misspelled and loses slightly on clean questions and on short keyword queries. BM25 here is `rank_bm25`'s Okapi
+  over the same passages.
+
+  | Query style | 300 paragraphs, 600 questions: FastMemory / BM25 | 2,000 paragraphs and questions: FastMemory / BM25 |
+  | :--- | :--- | :--- |
+  | Clean question | 0.938 / 0.952 | 0.903 / 0.919 (loss) |
+  | One misspelled word | 0.893 / 0.893 | 0.825 / 0.829 |
+  | Every long word misspelled | **0.580 / 0.427** (win) | **0.436 / 0.330** (win) |
+  | Keywords only | 0.808 / 0.843 (loss) | 0.657 / 0.684 (loss) |
+  | Misspelled keywords | **0.658 / 0.052** (win) | **0.499 / 0.015** (win) |
+
+  Win and loss: exact paired McNemar test, p < 0.05 (every labelled cell has p < 0.01). Unlabelled cells show no
+  significant difference (p ≥ 0.07).
+  Median query time on an Apple M2 Pro: 0.05 ms (300 paragraphs) and 0.15 ms (2,000), or 0.5–1.7 ms for misspelled
+  keywords. The harness and per-question results are public in the
+  [MahaBodi repository](https://github.com/mahabodi/mahabodi) (`research/bench_retrieval_fastmemory.py`).
+  MahaBodi's lexical search, which this search was ported from, gets the same hit or miss on every question.
+- **Clustering benchmark:** pre-registered in [`benchmarks/PREREG_CLUSTERING.md`](benchmarks/PREREG_CLUSTERING.md)
+  (LFR and SNAP graphs, against Leiden, Infomap and Louvain), running now. Results will be published here, losses
+  included.
 - **Production example (measured 2026-09-29):** a live FastStudio deployment serving PubChem:
 
   | Measured | Value |
@@ -217,6 +239,20 @@ For a hands-on technical demonstration of how FastMemory replaces Vector RAG wit
 - **[FinanceBench Notebook](fastmemory_financebench_sota.ipynb)**: Advanced demonstration of multi-hop financial reasoning using the Boeing 10-K dataset.
 
 ---
+
+### 7. Passage search over plain documents (0.4.10)
+
+```python
+import json, fastmemory
+
+m = fastmemory.SearchMemory([("Travel over $500 must be approved by a manager.", "policy.md"),
+                             ("Expense reports are due within 30 days.", "policy.md")])
+hits = json.loads(m.search("who aproves travel", 5))   # typo-tolerant: "aproves" still matches
+```
+
+Plain prose is split into passages, and `## [ID: x]` ATF sections are detected. Each result reports how it matched
+(exact, stem or fuzzy), so an agent can tell a confident match from a guess. In Rust: `search::Memory::from_documents`
+and `Memory::search`.
 
 ## 🧩 Clustering backend and embedding FastMemory
 
