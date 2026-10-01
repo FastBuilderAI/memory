@@ -174,3 +174,29 @@ tarball SHA-256 `7dc98b0d7e4ab75f318c533dcf40f6a7d07127da9e3f33733fc5d6c7e0b12e9
 `standard_include.cpp`. The mirror's `src/` has no other files. So the generator is the original Lancichinetti–Fortunato
 undirected, unweighted LFR code, with the four `return 0;` lines of Clarification 1 added. Results name it that way, with
 both sources. No graph or arm changes.
+
+## Clarification 6 (2026-10-02, after all n = 1K and 10K graphs finished, before any n = 100K or SNAP quality number
+was seen): concurrent graph workers
+
+At one graph at a time, the n = 100K cells alone project to ~5 days (leidenalg at ~8–9 min per run), on a machine
+with a history of failing under long sustained load. Approved by the reviewing agent before any n = 100K or SNAP
+result was scored:
+
+1. **Scheduling only.** `runall --worker i --workers 4`: four concurrent processes, each taking the graphs with
+   global index % 4 == i. Within a graph, arms still run sequentially in the same rotated order, one process per
+   (graph, arm), every arm single-threaded (OMP/RAYON/OPENBLAS_NUM_THREADS=1). No arm, parameter, seed or run-count
+   changes. The n = 1K and 10K results, which ran single-worker, are unchanged.
+2. **Speed metric at 100K and SNAP is CPU-seconds.** Concurrent workers contend for memory bandwidth and cache, so
+   wall-clock ratios at those sizes are noisy and are not quoted as the speed result. Each run records the 1-minute
+   load average and (new) the highest thermal-zone temperature.
+3. **Clean wall-clock subsample, fixed now:** after everything else finishes, arms N, LD and IM run again on
+   `lfr/n100000_mu0.3_s1` and `lfr/n100000_mu0.6_s1` (5 runs each), single-worker with nothing else running, into
+   `work/runs_clean/`. Any wall-clock speed ratio stated at n = 100K quotes that subsample; it is a timing
+   re-measurement only and its partitions are not re-scored.
+4. **SNAP worker caps, fixed now:** com-amazon and com-dblp run with at most 2 workers; com-youtube (~1.1M nodes)
+   runs alone (1 worker), for memory headroom on the 61 GB machine. Peak RSS per (graph, arm) is already recorded.
+5. **Switchover:** the single-worker runall is stopped now. The one mid-graph item (`lfr/n100000_mu0.1_s1`: B done,
+   LD in progress) is re-run in full under the clarification 2 rule, logged in `_interruptions.jsonl` with the
+   reason "scheduler change, not a crash". Boot-id gating stays.
+6. **leidenalg naming:** any speed statement about the LD arm names "leidenalg, ModularityVertexPartition,
+   n_iterations=-1 (run to convergence)" and its version, never just "Leiden".

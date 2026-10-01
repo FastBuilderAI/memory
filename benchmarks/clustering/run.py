@@ -196,6 +196,16 @@ _ARM_IMPORTS = {"N": ("fastmemory",), "B": ("fastmemory",), "LD": ("igraph", "le
                 "LV": ("igraph",), "IM": ("infomap",), "NX": ("networkx",)}
 
 
+def _cpu_temp():
+    """Highest thermal-zone temperature in Celsius (Linux), best effort; None where unavailable."""
+    try:
+        import glob
+        vals = [int(open(f).read().strip()) / 1000.0 for f in glob.glob("/sys/class/thermal/thermal_zone*/temp")]
+        return max(vals) if vals else None
+    except Exception:
+        return None
+
+
 def _boot_id():
     try:
         return open("/proc/sys/kernel/random/boot_id").read().strip()
@@ -218,14 +228,14 @@ def _arm_meta(arm):
     return meta
 
 
-def _arm_file(arm, name):
-    return os.path.join(WORK, "runs", arm, name.replace("/", "__") + ".json")
+def _arm_file(arm, name, runs_dir="runs"):
+    return os.path.join(WORK, runs_dir, arm, name.replace("/", "__") + ".json")
 
 
-def run_arm(arm, only=None):
+def run_arm(arm, only=None, runs_dir="runs"):
     """One arm on every graph (or on graph `only`), 5 shuffled-order runs per graph; one file per graph, written
     atomically once its 5 runs finish, with the boot id, the 1-minute load average per run and the process's peak RSS."""
-    out = os.path.join(WORK, "runs", arm); os.makedirs(out, exist_ok=True)
+    out = os.path.join(WORK, runs_dir, arm); os.makedirs(out, exist_ok=True)
     meta = _arm_meta(arm)
     for mod in _ARM_IMPORTS[arm]:  # imported before any timing
         __import__(mod)
@@ -240,7 +250,7 @@ def run_arm(arm, only=None):
     for name, path in graphs():
         if only is not None and name != only:
             continue
-        f = _arm_file(arm, name)
+        f = _arm_file(arm, name, runs_dir)
         if os.path.exists(f):
             continue
         boot = _boot_id()
@@ -249,7 +259,7 @@ def run_arm(arm, only=None):
         for r in range(RUNS):
             part, w, c, e2e = cluster(arm, edges, r)
             rec.append({"run": r, "wall_s": w, "cpu_s": c, "e2e_wall_s": e2e[0], "e2e_cpu_s": e2e[1],
-                        "loadavg_1m": os.getloadavg()[0], "partition": part})
+                        "loadavg_1m": os.getloadavg()[0], "cpu_temp_c": _cpu_temp(), "partition": part})
         rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1 << 20 if platform.system() == "Darwin" else 1 << 10)
         json.dump({"graph": name, "boot_id": boot, "boot_id_end": _boot_id(), "peak_rss_mb": rss, "runs": rec},
                   open(f + ".tmp", "w"))
@@ -257,14 +267,20 @@ def run_arm(arm, only=None):
         print(arm, name, round(sum(x["wall_s"] for x in rec) / RUNS, 3), flush=True)
 
 
-def run_all(arms):
+def run_all(arms, worker=0, workers=1, match=None):
     """PREREG_CLUSTERING clarification 2: arms interleaved per graph, in an order rotated by the graph's index, each
     (graph, arm) in its own process. A graph counts as done only when every arm's file exists with one boot id; a graph
-    found partly done (a crash or reboot mid-graph) is logged and all its arms are re-run in full."""
+    found partly done (a crash or reboot mid-graph) is logged and all its arms are re-run in full.
+    Clarification 6: `workers` concurrent runall processes each take the graphs with global index % workers == worker
+    (arms within a graph stay sequential and single-threaded); `match` restricts to names starting with it."""
     done_dir = os.path.join(WORK, "runs", "_done"); os.makedirs(done_dir, exist_ok=True)
     log = os.path.join(WORK, "runs", "_interruptions.jsonl")
     native = os.environ.get("FASTMEMORY_NATIVE_LIB")
     for gi, (name, _) in enumerate(graphs()):
+        if match and not name.startswith(match):
+            continue
+        if gi % workers != worker:
+            continue
         marker = os.path.join(done_dir, name.replace("/", "__") + ".json")
         if os.path.exists(marker):
             continue
@@ -304,13 +320,17 @@ def main():
     ap.add_argument("--arm", choices=ARMS)
     ap.add_argument("--graph", default=None, help="run: only this graph (e.g. lfr/n1000_mu0.1_s1)")
     ap.add_argument("--arms", default=",".join(ARMS), help="runall: the arms, comma-separated")
+    ap.add_argument("--runs-dir", default="runs", help="run: output directory under work/ (clarification 6 clean timing)")
+    ap.add_argument("--worker", type=int, default=0, help="runall: this worker's index (clarification 6)")
+    ap.add_argument("--workers", type=int, default=1, help="runall: total concurrent workers (clarification 6)")
+    ap.add_argument("--match", default=None, help="runall: only graphs whose name starts with this (e.g. lfr/ or snap/)")
     a = ap.parse_args()
     if a.phase == "gen":
         gen()
     elif a.phase == "run":
-        run_arm(a.arm, a.graph)
+        run_arm(a.arm, a.graph, a.runs_dir)
     elif a.phase == "runall":
-        run_all(a.arms.split(","))
+        run_all(a.arms.split(","), a.worker, a.workers, a.match)
     else:
         from score import score
         score(WORK, ARMS, NS, MUS, SEEDS, RUNS)
