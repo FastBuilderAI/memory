@@ -117,6 +117,22 @@ def score(WORK, ARMS, NS, MUS, SEEDS, RUNS):
             verdict = "beat" if (pa < 0.05 and mx > my) else "loss" if (pa < 0.05 and mx < my) else "tie"
             res["lfr_cells"].setdefault(cell, {})["N_vs_" + other] = {"nmi_N": mx, "nmi_other": my, "graphs": k, "p": p,
                                                                      "p_holm": pa, "verdict": verdict}
+    # clarification 6.3: the clean single-worker timing subsample (runs_clean/) is reported as timings only,
+    # never re-scored; any wall-clock speed ratio at n = 100K quotes these numbers
+    clean = {}
+    cdir = os.path.join(WORK, "runs_clean")
+    if os.path.isdir(cdir):
+        for a in sorted(os.listdir(cdir)):
+            for f in sorted(os.listdir(os.path.join(cdir, a))):
+                if not f.endswith(".json") or f == "_meta.json":
+                    continue
+                doc = json.load(open(os.path.join(cdir, a, f)))
+                clean.setdefault(a, {})[doc["graph"]] = {
+                    "wall_s_median": statistics.median(x["wall_s"] for x in doc["runs"]),
+                    "e2e_wall_s_median": statistics.median(x.get("e2e_wall_s", float("nan")) for x in doc["runs"]),
+                    "cpu_s_median": statistics.median(x["cpu_s"] for x in doc["runs"]),
+                    "loadavg_1m_median": statistics.median(x.get("loadavg_1m", float("nan")) for x in doc["runs"])}
+    res["clean_timing_subsample"] = clean or None
     man = os.path.join(WORK, "manifest.json")
     res["lfr_checks"] = {k: v.get("check") for k, v in json.load(open(man))["lfr"].items()} if os.path.exists(man) else None
     il = os.path.join(WORK, "runs", "_interruptions.jsonl")
