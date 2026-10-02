@@ -135,6 +135,20 @@ def score(WORK, ARMS, NS, MUS, SEEDS, RUNS):
     res["clean_timing_subsample"] = clean or None
     man = os.path.join(WORK, "manifest.json")
     res["lfr_checks"] = {k: v.get("check") for k, v in json.load(open(man))["lfr"].items()} if os.path.exists(man) else None
+    # the shared box carried another project's load during part of the run: every (graph, arm, run) whose
+    # 1-minute load average reached 10, or whose package temperature reached 95 C, is listed so timing readers
+    # can see the contention window (quality is unaffected; CPU-seconds are the pre-registered speed metric)
+    contended = []
+    for a in arms:
+        for fn in sorted(os.listdir(os.path.join(WORK, "runs", a))):
+            if not fn.endswith(".json") or fn == "_meta.json":
+                continue
+            doc = json.load(open(os.path.join(WORK, "runs", a, fn)))
+            for r in doc.get("runs", []):
+                if r.get("loadavg_1m", 0) >= 10 or (r.get("cpu_temp_c") or 0) >= 95:
+                    contended.append({"graph": doc["graph"], "arm": a, "run": r["run"],
+                                      "loadavg_1m": round(r.get("loadavg_1m", 0), 1), "cpu_temp_c": r.get("cpu_temp_c")})
+    res["contention_window"] = {"rule": "loadavg_1m >= 10 or cpu_temp_c >= 95", "n": len(contended), "runs": contended}
     il = os.path.join(WORK, "runs", "_interruptions.jsonl")
     res["interruptions"] = [json.loads(l) for l in open(il)] if os.path.exists(il) else []
     json.dump(res, open(os.path.join(WORK, "results.json"), "w"), indent=1, default=str)
