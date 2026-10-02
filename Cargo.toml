@@ -1,12 +1,12 @@
 [package]
 name = "fastmemory"
-version = "0.4.10"
+version = "0.4.11"
 edition = "2021"
 description = "A Topology Ontological Clustering Engine for AI Agent Memory"
 license = "MIT"
 repository = "https://github.com/FastBuilderAI/memory"
 homepage = "https://fastbuilder.ai"
-exclude = ["example/*", "scripts/*", "bin/*", ".github/*", "benchmarks/*", "*.png", "*.md", "!README.md"]
+exclude = ["example/*", "scripts/*", "bin/*", ".github/*", "benchmarks/*", "*.png", "*.md", "!README.md", "build_huggingface_examples.py", "generate_examples.sh", "*.ipynb"]
 
 [lib]
 name = "fastmemory"
