@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**FastMemory** is an ontological clustering engine that transforms flat, unstructured text embeddings into a structured, agent-navigable functional memory graph using the **Topology** (Component, Block, Function, Data, Access, Event) taxonomy.
+**FastMemory** is an ontological clustering engine that transforms flat, unstructured text into a structured, agent-navigable functional memory graph using the **Topology** (Component, Block, Function, Data, Access, Event) taxonomy — no embeddings required.
 
 Developed by [FastBuilder.AI](https://fastbuilder.ai), FastMemory bridges the gap between shallow vector retrieval (RAG) and deterministic computational memory.
 
